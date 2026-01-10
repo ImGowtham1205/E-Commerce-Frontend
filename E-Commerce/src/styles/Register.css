@@ -1,0 +1,173 @@
+/* =========================
+   Page Layout
+========================= */
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f9fafb, #eef2f7);
+  padding: 20px;
+}
+
+/* =========================
+   Card
+========================= */
+.register-card {
+  width: 400px;
+  background: #ffffff;
+  padding: 40px 35px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   Logo
+========================= */
+.register-logo {
+  display: block;
+  width: 90px;
+  margin: 0 auto 18px;
+}
+
+/* =========================
+   Title
+========================= */
+.register-card h2 {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 28px;
+  color: #111827;
+}
+
+/* =========================
+   Inputs
+========================= */
+.input-group {
+  margin-bottom: 18px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #374151;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #111827;
+  box-shadow: 0 0 0 2px rgba(17, 24, 39, 0.1);
+}
+
+/* =========================
+   Button
+========================= */
+.register-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px;
+  background: #111827;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.register-btn:hover {
+  background: #000000;
+}
+
+/* =========================
+   Messages
+========================= */
+.register-message {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.register-message.error {
+  color: #dc2626;
+}
+
+.register-message.success {
+  color: #16a34a;
+}
+
+/* =========================
+   Password Hint
+========================= */
+.password-hint {
+  margin-top: 6px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #6b7280; /* neutral gray */
+  transition: color 0.3s ease;
+}
+
+/* Invalid */
+.password-hint.error {
+  color: #dc2626; /* red */
+}
+
+/* Valid */
+.password-hint.success {
+  color: #16a34a; /* green */
+}
+
+
+/* =========================
+   Login Redirect
+========================= */
+.login-text {
+  margin-top: 22px;
+  text-align: center;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.login-text a {
+  color: #111827;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-text a:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   Responsive
+========================= */
+@media (max-width: 480px) {
+  .register-card {
+    width: 100%;
+    padding: 30px 24px;
+  }
+}
