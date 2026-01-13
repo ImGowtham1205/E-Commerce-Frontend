@@ -24,6 +24,7 @@ function ChangePassword() {
   /* 🔹 Logout */
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     navigate("/login");
   };
 
@@ -31,7 +32,7 @@ function ChangePassword() {
   useEffect(() => {
     const fetchWelcome = async () => {
       try {
-        const response = await api.get("/api/home");
+        const response = await api.get("/api/user/home");
         setWelcomeText(response.data);
       } catch (error) {
         console.error("Failed to load welcome message", error);
@@ -87,7 +88,7 @@ function ChangePassword() {
     }
 
     try {
-      const response = await api.put("/api/changepassword", {
+      const response = await api.put("/api/user/changepassword", {
         currentpassword: currentPassword,
         newpassword: newPassword,
       });

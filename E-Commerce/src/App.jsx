@@ -4,49 +4,63 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+
 import Welcome from "./pages/Welcome";
 import ChangePassword from "./pages/ChangePassword";
 import UserInfo from "./pages/UserInfo";
-import ProtectedRoute from "./pages/ProtectedRoute";
+import AdminWelcome from "./pages/AdminWelcome";
+
+import UserRoute from "./pages/UserRoute";
+import AdminRoute from "./pages/AdminRoute";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Default start */}
+        {/* Default */}
         <Route path="/" element={<Navigate to="/login" replace />} />
 
-        {/* Public routes */}
+        {/* Public */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
 
-        {/* Protected routes */}
+        {/* USER Routes */}
         <Route
           path="/welcome"
           element={
-            <ProtectedRoute>
+            <UserRoute>
               <Welcome />
-            </ProtectedRoute>
+            </UserRoute>
           }
         />
 
         <Route
           path="/userinfo"
           element={
-            <ProtectedRoute>
+            <UserRoute>
               <UserInfo />
-            </ProtectedRoute>
+            </UserRoute>
           }
         />
 
         <Route
           path="/changepassword"
           element={
-            <ProtectedRoute>
+            <UserRoute>
               <ChangePassword />
-            </ProtectedRoute>
+            </UserRoute>
+          }
+        />
+
+        {/* ADMIN Routes */}
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <AdminWelcome />
+            </AdminRoute>
           }
         />
 

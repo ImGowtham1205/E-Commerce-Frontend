@@ -13,6 +13,7 @@ function UserInfo() {
   
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     navigate("/login");
   };
 
@@ -20,11 +21,11 @@ function UserInfo() {
     const fetchData = async () => {
       try {
         // 🔹 Fetch welcome text
-        const welcomeRes = await api.get("/api/home");
+        const welcomeRes = await api.get("/api/user/home");
         setWelcomeText(welcomeRes.data);
 
         // 🔹 Fetch user info
-        const userRes = await api.get("/api/userinfo");
+        const userRes = await api.get("/api/user/userinfo");
         setUser(userRes.data);
       } catch (err) {
         setError("Failed to load user information");

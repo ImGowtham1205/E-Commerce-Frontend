@@ -12,6 +12,7 @@ function Welcome() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     navigate("/login");
   };
 
@@ -20,7 +21,7 @@ function Welcome() {
       try {
         const token = localStorage.getItem("token");
 
-        const response = await axios.get("http://localhost:8080/api/home", {
+        const response = await axios.get("http://localhost:8080/api/user/home", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

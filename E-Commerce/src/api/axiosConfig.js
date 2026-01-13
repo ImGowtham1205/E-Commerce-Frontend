@@ -8,11 +8,11 @@ const api = axios.create({
   }
 });
 
+/* ================= REQUEST INTERCEPTOR ================= */
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
 
-    // 🚫 Don't attach token to auth endpoints
     const publicEndpoints = [
       "/login",
       "/register",
@@ -33,5 +33,43 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-export default api;
+/* ================= RESPONSE INTERCEPTOR ================= */
+api.interceptors.response.use(
+  (response) => {
+    // 🔁 Refresh token if backend sends one
+    const authHeader = response.headers["authorization"];
 
+    if (authHeader && authHeader.startsWith("Bearer ")) {
+      const newToken = authHeader.replace("Bearer ", "");
+      localStorage.setItem("token", newToken);
+    }
+
+    return response;
+  },
+  (error) => {
+    const originalUrl = error.config?.url || "";
+
+    const publicEndpoints = [
+      "/login",
+      "/register",
+      "/forgot-password",
+      "/reset-password"
+    ];
+
+    const isPublic = publicEndpoints.some(url =>
+      originalUrl.includes(url)
+    );
+
+    // 🔴 Auto logout ONLY for protected API calls
+    if (error.response?.status === 401 && !isPublic) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      window.location.href = "/login";
+    }
+
+    // ❗Let Login.jsx handle 401 errors
+    return Promise.reject(error);
+  }
+);
+
+export default api;

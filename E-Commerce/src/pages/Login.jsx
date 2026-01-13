@@ -31,37 +31,40 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await api.post(
-        "/login",
-        {
-          email: email.trim(),
-          password: password.trim()
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      );
+      const response = await api.post("/login", {
+        email: email.trim(),
+        password: password.trim()
+      });
 
-      // ✅ Spring returns JWT token as String
-      if (response.status === 200 && response.data) {
-        localStorage.setItem("token", response.data);
-        navigate("/welcome", { replace: true });
+      if (response.status === 200) {
+        const { token, role } = response.data;
+
+        localStorage.setItem("token", token);
+        localStorage.setItem("role", role);
+
+        if (role === "ROLE_ADMIN") {
+          navigate("/admin", { replace: true });
+        } else {
+          navigate("/welcome", { replace: true });
+        }
       }
     } catch (err) {
       if (err.response) {
-        // 🔴 Server responded
         if (err.response.status === 401) {
-          setError("Invalid email or password");
+          const serverMsg =
+            typeof err.response.data === "string"
+              ? err.response.data
+              : err.response.data?.message;
+
+          setError(serverMsg || "Invalid email or password");
         } else {
           setError("Login failed. Try again.");
         }
       } else {
-        // 🔴 Server not reachable
         setError("Server not reachable");
       }
     } finally {
+      // 🔥 THIS FIXES THE STUCK BUTTON
       setLoading(false);
     }
   };
