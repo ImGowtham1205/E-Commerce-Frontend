@@ -6,7 +6,7 @@ import "../styles/Welcome.css";
 function Welcome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [search, setSearch] = useState("");
-  const [welcomeText, setWelcomeText] = useState("AzCart");
+  const [welcomeText, setWelcomeText] = useState("");
 
   const navigate = useNavigate();
 

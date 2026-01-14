@@ -5,7 +5,7 @@ import "../styles/Welcome.css";
 
 function ChangePassword() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [welcomeText, setWelcomeText] = useState("AzCart");
+  const [welcomeText, setWelcomeText] = useState("");
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");

@@ -8,7 +8,10 @@ import ResetPassword from "./pages/ResetPassword";
 import Welcome from "./pages/Welcome";
 import ChangePassword from "./pages/ChangePassword";
 import UserInfo from "./pages/UserInfo";
+
 import AdminWelcome from "./pages/AdminWelcome";
+import AdminProfile from "./pages/AdminProfile";
+import AdminChangePassword from "./pages/AdminchangePassword";
 
 import UserRoute from "./pages/UserRoute";
 import AdminRoute from "./pages/AdminRoute";
@@ -20,7 +23,7 @@ function App() {
         {/* Default */}
         <Route path="/" element={<Navigate to="/login" replace />} />
 
-        {/* Public */}
+        {/* Public Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -60,6 +63,24 @@ function App() {
           element={
             <AdminRoute>
               <AdminWelcome />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/profile"
+          element={
+            <AdminRoute>
+              <AdminProfile />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/change-password"
+          element={
+            <AdminRoute>
+              <AdminChangePassword />
             </AdminRoute>
           }
         />
