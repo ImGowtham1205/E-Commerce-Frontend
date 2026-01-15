@@ -1,18 +1,23 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
+/* ===== PUBLIC PAGES ===== */
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 
+/* ===== USER PAGES ===== */
 import Welcome from "./pages/Welcome";
 import ChangePassword from "./pages/ChangePassword";
 import UserInfo from "./pages/UserInfo";
 
+/* ===== ADMIN PAGES ===== */
 import AdminWelcome from "./pages/AdminWelcome";
 import AdminProfile from "./pages/AdminProfile";
 import AdminChangePassword from "./pages/AdminchangePassword";
+import AddProducts from "./pages/AddProducts";
 
+/* ===== ROUTE GUARDS ===== */
 import UserRoute from "./pages/UserRoute";
 import AdminRoute from "./pages/AdminRoute";
 
@@ -20,16 +25,16 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Default */}
+        {/* ===== DEFAULT ===== */}
         <Route path="/" element={<Navigate to="/login" replace />} />
 
-        {/* Public Routes */}
+        {/* ===== PUBLIC ROUTES ===== */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
 
-        {/* USER Routes */}
+        {/* ===== USER ROUTES ===== */}
         <Route
           path="/welcome"
           element={
@@ -57,7 +62,7 @@ function App() {
           }
         />
 
-        {/* ADMIN Routes */}
+        {/* ===== ADMIN ROUTES ===== */}
         <Route
           path="/admin"
           element={
@@ -77,6 +82,15 @@ function App() {
         />
 
         <Route
+          path="/admin/add-product"
+          element={
+            <AdminRoute>
+              <AddProducts />
+            </AdminRoute>
+          }
+        />
+
+        <Route
           path="/admin/change-password"
           element={
             <AdminRoute>
@@ -85,7 +99,7 @@ function App() {
           }
         />
 
-        {/* Fallback */}
+        {/* ===== FALLBACK ===== */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
