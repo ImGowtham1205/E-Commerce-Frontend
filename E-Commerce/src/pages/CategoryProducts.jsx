@@ -1,14 +1,15 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../api/axiosConfig";
 import "../styles/Welcome.css";
 
-function Welcome() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [search, setSearch] = useState("");
-  const [welcomeText, setWelcomeText] = useState("");
-
+function CategoryProducts() {
+  const { category } = useParams();
   const navigate = useNavigate();
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [welcomeText, setWelcomeText] = useState("");
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -17,17 +18,24 @@ function Welcome() {
   };
 
   useEffect(() => {
-    const fetchWelcome = async () => {
+    const fetchData = async () => {
       try {
-        const res = await api.get("/api/user/home");
-        setWelcomeText(res.data);
+        // Fetch welcome text
+        const welcomeRes = await api.get("/api/user/home");
+        setWelcomeText(welcomeRes.data);
+
+        // Fetch products by category
+        const productRes = await api.get(
+          `/api/products/${category}`
+        );
+        setProducts(productRes.data);
       } catch (err) {
-        console.error("Failed to load welcome message", err);
+        console.error("Category page error", err);
       }
     };
 
-    fetchWelcome();
-  }, []);
+    fetchData();
+  }, [category]);
 
   return (
     <div className="app-container">
@@ -69,36 +77,29 @@ function Welcome() {
 
       {/* Main Content */}
       <main className="content">
-        <div className="category-header">
-          <h2>Choose Your Category</h2>
-
-          <div className="search-box">
-            <input
-              type="text"
-              placeholder="Search categories..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-        </div>
+        <h2 style={{ marginBottom: "20px" }}>
+          Products in "{category}"
+        </h2>
 
         <div className="category-grid">
-          {/* Electronics */}
-          <div
-            className="category-card"
-            onClick={() => navigate("/category/Electronics")}
-          >
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/3659/3659899.png"
-              alt="Electronics"
-            />
-            <h3>Electronics</h3>
-            <p>Mobiles, Laptops, Accessories</p>
-          </div>
+          {products.length === 0 ? (
+            <p>No products found</p>
+          ) : (
+            products.map((product) => (
+              <div className="category-card" key={product.id}>
+                <img
+                  src={`http://localhost:8080/api/products/image/${product.id}`}
+                  alt={product.productname}
+                />
+                <h3>{product.productname}</h3>
+                <p>₹ {product.price}</p>
+              </div>
+            ))
+          )}
         </div>
       </main>
     </div>
   );
 }
 
-export default Welcome;
+export default CategoryProducts;

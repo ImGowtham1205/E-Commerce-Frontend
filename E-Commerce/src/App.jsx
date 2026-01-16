@@ -10,6 +10,7 @@ import ResetPassword from "./pages/ResetPassword";
 import Welcome from "./pages/Welcome";
 import ChangePassword from "./pages/ChangePassword";
 import UserInfo from "./pages/UserInfo";
+import CategoryProducts from "./pages/CategoryProducts";
 
 /* ===== ADMIN PAGES ===== */
 import AdminWelcome from "./pages/AdminWelcome";
@@ -40,6 +41,15 @@ function App() {
           element={
             <UserRoute>
               <Welcome />
+            </UserRoute>
+          }
+        />
+
+        <Route
+          path="/category/:category"
+          element={
+            <UserRoute>
+              <CategoryProducts />
             </UserRoute>
           }
         />
