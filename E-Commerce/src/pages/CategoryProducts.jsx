@@ -25,9 +25,7 @@ function CategoryProducts() {
         setWelcomeText(welcomeRes.data);
 
         // Fetch products by category
-        const productRes = await api.get(
-          `/api/products/${category}`
-        );
+        const productRes = await api.get(`/api/products/${category}`);
         setProducts(productRes.data);
       } catch (err) {
         console.error("Category page error", err);
@@ -39,7 +37,7 @@ function CategoryProducts() {
 
   return (
     <div className="app-container">
-      {/* Navbar */}
+      {/* ===== Navbar ===== */}
       <header className="navbar">
         <button
           className="hamburger"
@@ -47,20 +45,17 @@ function CategoryProducts() {
         >
           ☰
         </button>
-
         <h1 className="logo">{welcomeText}</h1>
       </header>
 
-      {/* Sidebar */}
+      {/* ===== Sidebar ===== */}
       <aside className={`sidebar ${menuOpen ? "open" : ""}`}>
         <ul>
           <li onClick={() => navigate("/welcome")}>🏠 Home</li>
           <li onClick={() => navigate("/userinfo")}>👤 Personal Info</li>
-          <li>🛒 Cart</li>
+          <li onClick={() => navigate("/cart")}>🛒 Cart</li>
           <li>📦 Orders</li>
-          <li onClick={() => navigate("/changepassword")}>
-            🔑 Change Password
-          </li>
+          <li onClick={() => navigate("/changepassword")}>🔑 Change Password</li>
           <li className="danger">🗑 Delete Account</li>
           <li className="logout" onClick={handleLogout}>
             🚪 Logout
@@ -68,6 +63,7 @@ function CategoryProducts() {
         </ul>
       </aside>
 
+      {/* ===== Overlay ===== */}
       {menuOpen && (
         <div
           className="overlay"
@@ -75,7 +71,7 @@ function CategoryProducts() {
         />
       )}
 
-      {/* Main Content */}
+      {/* ===== Main Content ===== */}
       <main className="content">
         <h2 style={{ marginBottom: "20px" }}>
           Products in "{category}"
@@ -86,7 +82,12 @@ function CategoryProducts() {
             <p>No products found</p>
           ) : (
             products.map((product) => (
-              <div className="category-card" key={product.id}>
+              <div
+                className="category-card"
+                key={product.id}
+                onClick={() => navigate(`/product/${product.id}`)}
+                style={{ cursor: "pointer" }}
+              >
                 <img
                   src={`http://localhost:8080/api/products/image/${product.id}`}
                   alt={product.productname}

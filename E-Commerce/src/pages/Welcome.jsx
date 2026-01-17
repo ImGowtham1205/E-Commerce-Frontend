@@ -46,9 +46,8 @@ function Welcome() {
       {/* Sidebar */}
       <aside className={`sidebar ${menuOpen ? "open" : ""}`}>
         <ul>
-          <li onClick={() => navigate("/welcome")}>🏠 Home</li>
           <li onClick={() => navigate("/userinfo")}>👤 Personal Info</li>
-          <li>🛒 Cart</li>
+          <li onClick={() => navigate("/cart")}>🛒 Cart</li>
           <li>📦 Orders</li>
           <li onClick={() => navigate("/changepassword")}>
             🔑 Change Password

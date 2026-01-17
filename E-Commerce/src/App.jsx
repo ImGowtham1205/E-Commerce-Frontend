@@ -11,6 +11,8 @@ import Welcome from "./pages/Welcome";
 import ChangePassword from "./pages/ChangePassword";
 import UserInfo from "./pages/UserInfo";
 import CategoryProducts from "./pages/CategoryProducts";
+import ProductDetails from "./pages/ProductDetails";
+import Cart from "./pages/Cart";
 
 /* ===== ADMIN PAGES ===== */
 import AdminWelcome from "./pages/AdminWelcome";
@@ -50,6 +52,24 @@ function App() {
           element={
             <UserRoute>
               <CategoryProducts />
+            </UserRoute>
+          }
+        />
+
+        <Route
+          path="/product/:id"
+          element={
+            <UserRoute>
+              <ProductDetails />
+            </UserRoute>
+          }
+        />
+
+        <Route
+          path="/cart"
+          element={
+            <UserRoute>
+              <Cart />
             </UserRoute>
           }
         />
