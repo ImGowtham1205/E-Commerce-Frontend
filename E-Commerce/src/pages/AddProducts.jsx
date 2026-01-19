@@ -151,6 +151,7 @@ function AddProduct() {
           <li onClick={() => navigate("/admin")}>🏠 Home</li>
           <li onClick={() => navigate("/admin/profile")}>👤 Personal Info</li>
           <li onClick={() => navigate("/admin/add-product")}>➕ Add Product</li>
+           <li onClick={() => navigate("/admin/products")}>📦 Manage Products </li>
           <li onClick={() => navigate("/admin/change-password")}>🔑 Change Password</li>
           <li className="danger" onClick={() => navigate("/admin/delete-account")}>
             🗑 Delete Account
@@ -217,6 +218,7 @@ function AddProduct() {
           >
             <option value="">-- Select Category --</option>
             <option value="Electronics">Electronics</option>
+            <option value="Books">Books</option>
           </select>
           {errors.category && <p className="error">{errors.category}</p>}
 

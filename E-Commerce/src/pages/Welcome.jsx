@@ -39,7 +39,6 @@ function Welcome() {
         >
           ☰
         </button>
-
         <h1 className="logo">{welcomeText}</h1>
       </header>
 
@@ -93,6 +92,19 @@ function Welcome() {
             />
             <h3>Electronics</h3>
             <p>Mobiles, Laptops, Accessories</p>
+          </div>
+
+          {/* Books */}
+          <div
+            className="category-card"
+            onClick={() => navigate("/category/Books")}
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/29/29302.png"
+              alt="Books"
+            />
+            <h3>Books</h3>
+            <p>Novels, Academics, Comics</p>
           </div>
         </div>
       </main>

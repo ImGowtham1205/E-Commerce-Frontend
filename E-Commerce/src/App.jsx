@@ -19,6 +19,8 @@ import AdminWelcome from "./pages/AdminWelcome";
 import AdminProfile from "./pages/AdminProfile";
 import AdminChangePassword from "./pages/AdminchangePassword";
 import AddProducts from "./pages/AddProducts";
+import AdminProducts from "./pages/AdminProducts";
+import EditProduct from "./pages/EditProduct"; // ✅ ADD THIS
 
 /* ===== ROUTE GUARDS ===== */
 import UserRoute from "./pages/UserRoute";
@@ -116,6 +118,25 @@ function App() {
           element={
             <AdminRoute>
               <AddProducts />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/products"
+          element={
+            <AdminRoute>
+              <AdminProducts />
+            </AdminRoute>
+          }
+        />
+
+        {/* ✅ EDIT PRODUCT ROUTE */}
+        <Route
+          path="/admin/edit-product/:id"
+          element={
+            <AdminRoute>
+              <EditProduct />
             </AdminRoute>
           }
         />
