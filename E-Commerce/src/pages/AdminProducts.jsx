@@ -136,6 +136,9 @@ function AdminProducts() {
               <option value="all">All Categories</option>
               <option value="Electronics">Electronics</option>
               <option value="Books">Books</option>
+              <option value="Furniture">Furniture</option>
+              <option value="Sports">Sports</option>
+              <option value="Applicances">Applicances</option>
             </select>
           </div>
         </div>

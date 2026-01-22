@@ -219,6 +219,9 @@ function AddProduct() {
             <option value="">-- Select Category --</option>
             <option value="Electronics">Electronics</option>
             <option value="Books">Books</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Sports">Sports</option>
+            <option value="Applicances">Applicances</option>
           </select>
           {errors.category && <p className="error">{errors.category}</p>}
 

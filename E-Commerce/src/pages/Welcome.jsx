@@ -106,6 +106,45 @@ function Welcome() {
             <h3>Books</h3>
             <p>Novels, Academics, Comics</p>
           </div>
+
+          {/* Sports */}
+          <div
+            className="category-card"
+            onClick={() => navigate("/category/Sports")}
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/857/857455.png"
+              alt="Sports"
+            />
+            <h3>Sports</h3>
+            <p>Fitness, Outdoor, Sports Gear</p>
+          </div>
+
+          {/* Furniture */}
+          <div
+            className="category-card"
+            onClick={() => navigate("/category/Furniture")}
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png"
+              alt="Furniture"
+            />
+            <h3>Furniture</h3>
+            <p>Sofas, Beds, Tables</p>
+          </div>
+
+          {/* Appliances */}
+          <div
+            className="category-card"
+            onClick={() => navigate("/category/Applicances")}
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1046/1046857.png"
+              alt="Appliances"
+            />
+            <h3>Appliances</h3>
+            <p>Kitchen & Home Appliances</p>
+          </div>
         </div>
       </main>
     </div>

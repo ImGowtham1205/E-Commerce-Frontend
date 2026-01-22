@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axiosConfig";
-import "../styles/Adminwelcome.css";
+import "../styles/AdminWelcome.css";
 import "../styles/AdminChangePassword.css";
 
 function AdminChangePassword() {
@@ -11,23 +11,36 @@ function AdminChangePassword() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const [fieldErrors, setFieldErrors] = useState({});
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
+  /* ================= Logout ================= */
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     navigate("/login");
   };
 
-  // 🔐 Password regex
-  const passwordPattern =
-    "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+  /* ================= Auto-hide server messages ================= */
+  useEffect(() => {
+    if (success || error) {
+      const timer = setTimeout(() => {
+        setSuccess("");
+        setError("");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [success, error]);
 
-  // 🔍 Live password rule check
+  /* ================= Password Regex ================= */
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+  /* ================= Live Password Rules ================= */
   const passwordRules = {
     length: newPassword.length >= 8,
     upper: /[A-Z]/.test(newPassword),
@@ -36,15 +49,30 @@ function AdminChangePassword() {
     special: /[@$!%*?&]/.test(newPassword),
   };
 
+  /* ================= Submit ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
 
-    if (newPassword !== confirmPassword) {
-      setError("New password and confirm password do not match");
-      return;
+    let errors = {};
+
+    if (!currentPassword) {
+      errors.currentPassword = "Current password is required";
     }
+
+    if (!newPassword) {
+      errors.newPassword = "New password is required";
+    } else if (!passwordRegex.test(newPassword)) {
+      errors.newPassword = "Password does not meet required rules";
+    }
+
+    if (!confirmPassword) {
+      errors.confirmPassword = "Please confirm your new password";
+    } else if (newPassword !== confirmPassword) {
+      errors.confirmPassword = "Passwords do not match";
+    }
+
+    setFieldErrors(errors);
+    if (Object.keys(errors).length > 0) return;
 
     try {
       setLoading(true);
@@ -53,16 +81,13 @@ function AdminChangePassword() {
         newpassword: newPassword,
       });
 
-      setSuccess(res.data);
+      setSuccess(res.data || "Password updated successfully");
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
+      setFieldErrors({});
     } catch (err) {
-      if (err.response?.status === 401) {
-        handleLogout();
-      } else {
-        setError(err.response?.data || "Password update failed");
-      }
+      setError(err.response?.data || "Password update failed");
     } finally {
       setLoading(false);
     }
@@ -70,7 +95,7 @@ function AdminChangePassword() {
 
   return (
     <div className="admin-container">
-      {/* Navbar */}
+      {/* ================= Top Navbar (SAME AS AdminWelcome) ================= */}
       <header className="admin-navbar">
         <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
           ☰
@@ -78,10 +103,9 @@ function AdminChangePassword() {
         <h1 className="logo">AzCart Admin</h1>
       </header>
 
-      {/* Sidebar */}
+      {/* ================= Sidebar (SAME AS AdminWelcome) ================= */}
       <aside className={`admin-sidebar ${menuOpen ? "open" : ""}`}>
         <ul>
-          <li onClick={() => navigate("/admin")}>🏠 Home</li>
           <li onClick={() => navigate("/admin/profile")}>👤 Personal Info</li>
           <li onClick={() => navigate("/admin/add-product")}>➕ Add Product</li>
           <li onClick={() => navigate("/admin/products")}>📦 Manage Products </li>
@@ -94,9 +118,11 @@ function AdminChangePassword() {
         </ul>
       </aside>
 
-      {menuOpen && <div className="overlay" onClick={() => setMenuOpen(false)} />}
+      {menuOpen && (
+        <div className="overlay" onClick={() => setMenuOpen(false)} />
+      )}
 
-      {/* Main Content */}
+      {/* ================= Main Content ================= */}
       <main className="admin-content">
         <h2>Change Password</h2>
         <p>Update your admin account password</p>
@@ -105,22 +131,26 @@ function AdminChangePassword() {
           {error && <div className="error">{error}</div>}
           {success && <div className="success">{success}</div>}
 
+          {/* Current Password */}
           <div className="form-group">
             <label>Current Password</label>
             <input
               type="password"
-              required
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
             />
+            {fieldErrors.currentPassword && (
+              <small className="field-error">
+                {fieldErrors.currentPassword}
+              </small>
+            )}
           </div>
 
+          {/* New Password */}
           <div className="form-group">
             <label>New Password</label>
             <input
               type="password"
-              required
-              pattern={passwordPattern}
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
@@ -142,16 +172,27 @@ function AdminChangePassword() {
                 At least 1 special character (@ $ ! % * ? &)
               </li>
             </ul>
+
+            {fieldErrors.newPassword && (
+              <small className="field-error">
+                {fieldErrors.newPassword}
+              </small>
+            )}
           </div>
 
+          {/* Confirm Password */}
           <div className="form-group">
             <label>Confirm New Password</label>
             <input
               type="password"
-              required
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
+            {fieldErrors.confirmPassword && (
+              <small className="field-error">
+                {fieldErrors.confirmPassword}
+              </small>
+            )}
           </div>
 
           <button type="submit" disabled={loading}>

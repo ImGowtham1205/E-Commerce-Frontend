@@ -109,7 +109,7 @@ function EditProduct() {
 
       setTimeout(() => {
         navigate("/admin/products");
-      }, 3000);
+      }, 2000);
     } catch (err) {
       console.error(err);
       setServerMessage("Failed to update product");
@@ -182,6 +182,9 @@ function EditProduct() {
             <option value="">-- Select Category --</option>
             <option value="Electronics">Electronics</option>
             <option value="Books">Books</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Sports">Sports</option>
+            <option value="Applicances">Applicances</option>
           </select>
 
           <input
