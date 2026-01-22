@@ -228,7 +228,6 @@ function ProductDetails() {
 
                     <div className="review-meta">
                       <span className="review-user">{cmt.username}</span>
-                      <span className="review-time">Just now</span>
                     </div>
 
                     {cmt.userid === userId && (

@@ -243,12 +243,6 @@ button:disabled {
   font-weight: 600;
 }
 
-.review-time {
-  display: block;
-  font-size: 12px;
-  color: #64748b;
-}
-
 .review-text {
   margin-top: 10px;
   font-size: 14px;
