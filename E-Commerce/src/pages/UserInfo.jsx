@@ -91,6 +91,11 @@ function UserInfo() {
               </div>
 
               <div className="info-row">
+                <span>Address</span>
+                <p>{user.address}</p>
+              </div>
+                                      
+              <div className="info-row">
                 <span>Role</span>
                 <p>{user.role}</p>
               </div>

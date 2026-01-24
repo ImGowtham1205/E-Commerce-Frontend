@@ -11,6 +11,7 @@ function Register() {
     name: "",
     email: "",
     phoneno: "",
+    address: "", // ✅ Added
     password: ""
   });
 
@@ -18,11 +19,10 @@ function Register() {
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Password states
+  // Password validation
   const [passwordTouched, setPasswordTouched] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
 
-  // Password regex
   const passwordPattern =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
@@ -37,6 +37,7 @@ function Register() {
     }
   }, [error, success]);
 
+  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -51,12 +52,13 @@ function Register() {
     }
   };
 
+  // Submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { name, email, phoneno, password } = formData;
+    const { name, email, phoneno, address, password } = formData;
 
-    if (!name || !email || !phoneno || !password) {
+    if (!name || !email || !phoneno || !address || !password) {
       setError("All fields are required");
       return;
     }
@@ -77,17 +79,12 @@ function Register() {
         { validateStatus: () => true }
       );
 
-      // SUCCESS
       if (response.status === 201) {
         setSuccess(response.data);
         setTimeout(() => navigate("/login"), 1500);
-      }
-      // BACKEND VALIDATION ERRORS
-      else if (response.status === 409) {
+      } else if (response.status === 409) {
         setError(response.data);
-      }
-      // OTHER ERRORS
-      else {
+      } else {
         setError("Registration failed");
       }
     } catch {
@@ -104,6 +101,7 @@ function Register() {
 
         <h2>Create Account</h2>
 
+        {/* Name */}
         <div className="input-group">
           <label>Name</label>
           <input
@@ -116,6 +114,7 @@ function Register() {
           />
         </div>
 
+        {/* Email */}
         <div className="input-group">
           <label>Email</label>
           <input
@@ -128,6 +127,7 @@ function Register() {
           />
         </div>
 
+        {/* Phone */}
         <div className="input-group">
           <label>Phone Number</label>
           <input
@@ -140,6 +140,19 @@ function Register() {
           />
         </div>
 
+        {/* Address */}
+        <div className="input-group">
+          <label>Address</label>
+          <textarea
+            name="address"
+            placeholder="Enter your address"
+            value={formData.address}
+            onChange={handleChange}
+            required
+          ></textarea>
+        </div>
+
+        {/* Password */}
         <div className="input-group">
           <label>Password</label>
           <input
@@ -151,7 +164,6 @@ function Register() {
             required
           />
 
-          {/* Password rule message */}
           <p
             className={`password-hint ${
               passwordTouched
@@ -161,11 +173,11 @@ function Register() {
                 : ""
             }`}
           >
-            Minimum 8 characters, including uppercase, lowercase, number, and
-            special character
+            Minimum 8 characters, including uppercase, lowercase, number, and special character
           </p>
         </div>
 
+        {/* Submit */}
         <button type="submit" className="register-btn" disabled={loading}>
           {loading ? "Creating account..." : "Sign Up"}
         </button>

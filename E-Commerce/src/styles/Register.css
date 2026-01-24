@@ -162,6 +162,24 @@
   text-decoration: underline;
 }
 
+.input-group textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  resize: none;
+  height: 80px;
+  font-family: inherit;
+}
+
+.input-group textarea:focus {
+  outline: none;
+  border-color: #111827;
+  box-shadow: 0 0 0 2px rgba(17, 24, 39, 0.1);
+}
+
+
 /* =========================
    Responsive
 ========================= */
