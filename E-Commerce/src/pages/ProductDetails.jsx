@@ -22,7 +22,7 @@ function ProductDetails() {
   const [reviews, setReviews] = useState([]);
   const [commentCount, setCommentCount] = useState(0);
 
-  // ✏️ Edit review states
+  // Edit review states
   const [editingId, setEditingId] = useState(null);
   const [editText, setEditText] = useState("");
 
@@ -84,13 +84,42 @@ function ProductDetails() {
     setCommentCount(res.data);
   };
 
+  /* ===== Add To Cart ===== */
   const handleAddToCart = async () => {
-    if (product.stock === 0) return;
+    if (product.stock === 0) {
+      setMessage("Out of stock");
+      return;
+    }
+
     const res = await api.post("/api/user/addtocart", {
       productId: product.id,
       quantity: 1,
     });
+
     setMessage(res.data);
+  };
+
+  /* ===== Buy Now ===== */
+  const handleBuyNow = async () => {
+    try {
+      if (product.stock === 0) {
+        setMessage("Out of stock");
+        return;
+      }
+
+      const res = await api.post(`/api/user/purchase/${product.id}`, {
+        userid: userId,
+      });
+
+      setMessage(res.data);
+
+      // Optional redirect to orders page
+      // navigate("/orders");
+
+    } catch (err) {
+      console.error("Purchase failed", err);
+      setMessage("Purchase failed");
+    }
   };
 
   /* ===== Add Review ===== */
@@ -160,7 +189,7 @@ function ProductDetails() {
           <li onClick={() => navigate("/welcome")}>🏠 Home</li>
           <li onClick={() => navigate("/userinfo")}>👤 Personal Info</li>
           <li onClick={() => navigate("/cart")}>🛒 Cart</li>
-          <li>📦 Orders</li>
+          <li onClick={() => navigate("/orders")}>📦 Orders</li>
           <li onClick={() => navigate("/changepassword")}>🔑 Change Password</li>
           <li className="logout" onClick={handleLogout}>🚪 Logout</li>
         </ul>
@@ -171,6 +200,7 @@ function ProductDetails() {
       {/* Main Content */}
       <main className="content">
         <div className="product-details-card">
+          {/* Product Image */}
           <div className="product-image-section">
             <img
               src={`http://localhost:8080/api/products/image/${product.id}`}
@@ -178,20 +208,34 @@ function ProductDetails() {
             />
           </div>
 
+          {/* Product Info */}
           <div className="product-info-section">
             <h2>{product.productname}</h2>
             <p className="product-description">{product.description}</p>
             <p className="product-price">₹ {product.price}</p>
-
             {message && (
               <p className={`cart-message ${showMessage ? "fade-in" : "fade-out"}`}>
                 {message}
               </p>
             )}
 
+            {/* Buttons */}
             <div className="product-actions">
-              <button className="buy-btn">Buy Now</button>
-              <button className="cart-btn" onClick={handleAddToCart}>Add to Cart</button>
+              <button
+                className="buy-btn"
+                onClick={handleBuyNow}
+                disabled={product.stock === 0}
+              >
+                Buy Now
+              </button>
+
+              <button
+                className="cart-btn"
+                onClick={handleAddToCart}
+                disabled={product.stock === 0}
+              >
+                Add to Cart
+              </button>
             </div>
 
             {/* Write Review */}
@@ -211,13 +255,11 @@ function ProductDetails() {
               </button>
             </div>
 
-            {/* Reviews */}
+            {/* Reviews List */}
             <div className="review-list">
               <h3>Customer Reviews ({commentCount})</h3>
 
-              {reviews.length === 0 && (
-                <p className="no-review">No reviews yet</p>
-              )}
+              {reviews.length === 0 && <p className="no-review">No reviews yet</p>}
 
               {reviews.map((cmt) => (
                 <div key={cmt.id} className="review-card">
@@ -234,16 +276,10 @@ function ProductDetails() {
                       <div className="review-actions">
                         {editingId !== cmt.id && (
                           <>
-                            <button
-                              className="edit-review"
-                              onClick={() => handleEditReview(cmt)}
-                            >
+                            <button className="edit-review" onClick={() => handleEditReview(cmt)}>
                               Edit
                             </button>
-                            <button
-                              className="delete-review"
-                              onClick={() => handleDeleteReview(cmt.id)}
-                            >
+                            <button className="delete-review" onClick={() => handleDeleteReview(cmt.id)}>
                               Delete
                             </button>
                           </>
