@@ -126,7 +126,7 @@ function Cart() {
         <ul>
           <li onClick={() => navigate("/welcome")}>🏠 Home</li>
           <li onClick={() => navigate("/userinfo")}>👤 Personal Info</li>
-          <li>📦 Orders</li>
+          <li onClick={() => navigate("/orders")}>📦 Orders</li>
           <li onClick={() => navigate("/changepassword")}>
             🔑 Change Password
           </li>

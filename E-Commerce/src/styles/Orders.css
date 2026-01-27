@@ -1,0 +1,214 @@
+/* Title */
+.orders-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #0f172a;
+}
+
+/* No Orders Text */
+.no-orders {
+  font-size: 16px;
+  color: #64748b;
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* Orders Grid */
+.orders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 22px;
+}
+
+/* Order Card */
+.order-card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  transition: 0.25s ease;
+  border: 1px solid #f1f5f9;
+}
+
+.order-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Product Image */
+.order-card img {
+  width: 95px;
+  height: 95px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+/* Order Info */
+.order-info h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #0f172a;
+}
+
+.order-info p {
+  font-size: 14px;
+  color: #475569;
+  margin: 2px 0;
+}
+
+/* Status Colors */
+.status {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.status.delivered {
+  color: #16a34a;
+}
+
+.status.not-delivered {
+  color: #f59e0b;
+}
+
+.status.cancelled {
+  color: #dc2626;
+}
+
+/* Cancel Button */
+.cancel-btn {
+  margin-top: 10px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 10px;
+  background: #ef4444;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cancel-btn:hover {
+  background: #b91c1c;
+  transform: scale(1.05);
+}
+
+/* ===== Cancel Popup Overlay ===== */
+.cancel-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(2px);
+}
+
+/* Popup Box */
+.cancel-popup {
+  background: white;
+  padding: 22px 25px;
+  border-radius: 14px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+  animation: popupFade 0.25s ease-in-out;
+}
+
+@keyframes popupFade {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.cancel-popup h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #0f172a;
+}
+
+.cancel-popup p {
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* Popup Buttons */
+.popup-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 18px;
+  gap: 10px;
+}
+
+.btn-no {
+  flex: 1;
+  background: #94a3b8;
+  color: white;
+  border: none;
+  padding: 8px 0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-no:hover {
+  background: #64748b;
+}
+
+/* Yes Cancel Button */
+.btn-yes {
+  flex: 1;
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 8px 0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-yes:hover {
+  background: #b91c1c;
+  transform: scale(1.05);
+}
+
+.welcome-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+}
+
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .order-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .order-card img {
+    width: 120px;
+    height: 120px;
+  }
+}

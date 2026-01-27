@@ -13,6 +13,7 @@ import UserInfo from "./pages/UserInfo";
 import CategoryProducts from "./pages/CategoryProducts";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
+import Orders from "./pages/Orders"; 
 
 /* ===== ADMIN PAGES ===== */
 import AdminWelcome from "./pages/AdminWelcome";
@@ -20,7 +21,7 @@ import AdminProfile from "./pages/AdminProfile";
 import AdminChangePassword from "./pages/AdminchangePassword";
 import AddProducts from "./pages/AddProducts";
 import AdminProducts from "./pages/AdminProducts";
-import EditProduct from "./pages/EditProduct"; // ✅ ADD THIS
+import EditProduct from "./pages/EditProduct";
 
 /* ===== ROUTE GUARDS ===== */
 import UserRoute from "./pages/UserRoute";
@@ -72,6 +73,15 @@ function App() {
           element={
             <UserRoute>
               <Cart />
+            </UserRoute>
+          }
+        />
+
+        <Route
+          path="/orders" 
+          element={
+            <UserRoute>
+              <Orders />
             </UserRoute>
           }
         />
@@ -131,7 +141,7 @@ function App() {
           }
         />
 
-        {/* ✅ EDIT PRODUCT ROUTE */}
+        {/* EDIT PRODUCT */}
         <Route
           path="/admin/edit-product/:id"
           element={
