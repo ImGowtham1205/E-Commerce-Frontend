@@ -1,0 +1,151 @@
+/* Container */
+.orders-table-container {
+  margin-top: 20px;
+  overflow-x: auto;
+  background: white;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  width: 100%;
+}
+
+/* Table */
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  min-width: 1000px; /* desktop safety */
+}
+
+/* Cells */
+.orders-table th, 
+.orders-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* Header */
+.orders-table th {
+  background: #1d4ed8;
+  color: white;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+/* Hover */
+.orders-table tbody tr:hover {
+  background: #f1f5f9;
+  transition: 0.2s ease;
+}
+
+/* Image */
+.order-img {
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+/* Address column */
+.address-col {
+  max-width: 220px;
+  white-space: normal;
+  word-break: break-word;
+  text-align: left;
+  font-size: 13px;
+}
+
+/* Status colors */
+.success {
+  color: #16a34a;
+  font-weight: bold;
+}
+
+.cancelled {
+  color: #dc2626;
+  font-weight: bold;
+}
+
+.pending {
+  color: #f97316;
+  font-weight: bold;
+}
+
+/* ========================= */
+/* ===== RESPONSIVE UI ===== */
+/* ========================= */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .orders-table {
+    min-width: 900px;
+  }
+
+  .orders-table th, 
+  .orders-table td {
+    font-size: 13px;
+    padding: 10px 8px;
+  }
+
+  .order-img {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .orders-table-container {
+    padding: 8px;
+  }
+
+  .orders-table {
+    min-width: 750px; /* horizontal scroll */
+  }
+
+  .orders-table th, 
+  .orders-table td {
+    font-size: 12px;
+    padding: 8px 6px;
+  }
+
+  .order-img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .address-col {
+    max-width: 160px;
+    font-size: 12px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .orders-table {
+    min-width: 680px;
+  }
+
+  .orders-table th, 
+  .orders-table td {
+    font-size: 11px;
+    padding: 6px 5px;
+  }
+
+  .order-img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .address-col {
+    max-width: 140px;
+    font-size: 11px;
+  }
+}

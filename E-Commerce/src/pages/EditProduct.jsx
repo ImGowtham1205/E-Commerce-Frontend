@@ -127,14 +127,13 @@ function EditProduct() {
 
       <aside className={`admin-sidebar ${menuOpen ? "open" : ""}`}>
         <ul>
-          <li onClick={() => navigate("/admin")}>Home</li>
-          <li onClick={() => navigate("/admin/profile")}>Personal Info</li>
-          <li onClick={() => navigate("/admin/add-product")}>Add Product</li>
-          <li onClick={() => navigate("/admin/products")}>Manage Products</li>
-          <li onClick={() => navigate("/admin/change-password")}>
-            Change Password
-          </li>
-          <li className="logout" onClick={handleLogout}>Logout</li>
+          <li onClick={() => navigate("/admin")}>🏠 Home</li>
+          <li onClick={() => navigate("/admin/profile")}>👤 Personal Info</li>
+          <li onClick={() => navigate("/admin/add-product")}>➕ Add Product</li>
+          <li onClick={() => navigate("/admin/products")}>📦 Manage Products</li>
+          <li onClick={() => navigate("/admin/orders")}>🧾 Manage Orders</li>
+          <li onClick={() => navigate("/admin/change-password")}>🔑 Change Password</li>
+          <li className="logout" onClick={handleLogout}>🚪 Logout</li>
         </ul>
       </aside>
 
