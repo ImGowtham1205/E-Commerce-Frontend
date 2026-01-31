@@ -191,6 +191,7 @@ function ProductDetails() {
           <li onClick={() => navigate("/cart")}>🛒 Cart</li>
           <li onClick={() => navigate("/orders")}>📦 Orders</li>
           <li onClick={() => navigate("/changepassword")}>🔑 Change Password</li>
+          <li className="danger" onClick={() => navigate("/delete-account")}>🗑 Delete Account</li>
           <li className="logout" onClick={handleLogout}>🚪 Logout</li>
         </ul>
       </aside>

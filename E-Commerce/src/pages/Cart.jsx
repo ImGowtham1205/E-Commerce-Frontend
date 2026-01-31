@@ -64,7 +64,7 @@ function Cart() {
 
   /* ===== DELETE CART ITEM ===== */
   const deleteCartItem = async (e, cartId) => {
-    e.stopPropagation(); // 🔴 PREVENT CARD CLICK
+    e.stopPropagation(); 
 
     try {
       await api.delete("/api/user/deletecartitem", {
@@ -81,7 +81,7 @@ function Cart() {
 
   /* ===== UPDATE QUANTITY ===== */
   const updateQuantity = async (e, cartId, productId, userId, quantity) => {
-    e.stopPropagation(); // 🔴 PREVENT CARD CLICK
+    e.stopPropagation();
     if (quantity < 1) return;
 
     try {
@@ -130,7 +130,7 @@ function Cart() {
           <li onClick={() => navigate("/changepassword")}>
             🔑 Change Password
           </li>
-          <li className="danger">🗑 Delete Account</li>
+          <li className="danger" onClick={() => navigate("/delete-account")}>🗑 Delete Account</li>
           <li className="logout" onClick={handleLogout}>
             🚪 Logout
           </li>

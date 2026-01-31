@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axiosConfig";
-import "../styles/AdminWelcome.css";
 import "../styles/AdminOrders.css";
 
 function AdminOrders() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [orders, setOrders] = useState([]);
   const [products, setProducts] = useState({});
-  const [users, setUsers] = useState({});
   const navigate = useNavigate();
 
   // Logout
@@ -18,35 +16,26 @@ function AdminOrders() {
     navigate("/login");
   };
 
-  // Fetch Orders + Product + User Info
+  // Fetch Orders + Products
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const res = await api.get("/api/admin/fetchorders");
         setOrders(res.data);
 
-        // Fetch product & user for each order
         res.data.forEach(async (order) => {
-          // Product API
           if (!products[order.productid]) {
-            const prodRes = await api.get(`/api/products/details/${order.productid}`);
+            const prodRes = await api.get(
+              `/api/products/details/${order.productid}`
+            );
             setProducts((prev) => ({
               ...prev,
               [order.productid]: prodRes.data,
             }));
           }
-
-          // User API
-          if (!users[order.userid]) {
-            const userRes = await api.get(`/api/getuser/${order.userid}`);
-            setUsers((prev) => ({
-              ...prev,
-              [order.userid]: userRes.data,
-            }));
-          }
         });
       } catch (err) {
-        console.error("Order fetch error", err);
+        console.error("Failed to fetch orders", err);
       }
     };
 
@@ -57,7 +46,9 @@ function AdminOrders() {
     <div className="admin-container">
       {/* ===== NAVBAR ===== */}
       <header className="admin-navbar">
-        <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>☰</button>
+        <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+          ☰
+        </button>
         <h1 className="logo">AzCart Admin</h1>
       </header>
 
@@ -67,9 +58,18 @@ function AdminOrders() {
           <li onClick={() => navigate("/admin/profile")}>👤 Personal Info</li>
           <li onClick={() => navigate("/admin/add-product")}>➕ Add Product</li>
           <li onClick={() => navigate("/admin/products")}>📦 Manage Products</li>
-          <li onClick={() => navigate("/admin/change-password")}>🔑 Change Password</li>
-          <li className="danger" onClick={() => navigate("/admin/delete-account")}>🗑 Delete Account</li>
-          <li className="logout" onClick={handleLogout}> 🚪 Logout</li>
+          <li onClick={() => navigate("/admin/change-password")}>
+            🔑 Change Password
+          </li>
+          <li
+            className="danger"
+            onClick={() => navigate("/admin/delete-account")}
+          >
+            🗑 Delete Account
+          </li>
+          <li className="logout" onClick={handleLogout}>
+            🚪 Logout
+          </li>
         </ul>
       </aside>
 
@@ -77,7 +77,7 @@ function AdminOrders() {
 
       {/* ===== MAIN CONTENT ===== */}
       <main className="admin-content">
-        <h2>📦 All Orders</h2>
+        <h2 className="page-title">📦 All Orders</h2>
 
         <div className="orders-table-container">
           <table className="orders-table">
@@ -99,21 +99,27 @@ function AdminOrders() {
             <tbody>
               {orders.map((order) => {
                 const product = products[order.productid];
-                const user = users[order.userid];
 
                 return (
                   <tr key={order.orderid}>
                     <td>{order.orderid}</td>
+                    <td>{order.username}</td>
+                    <td>{order.phoneno}</td>
 
-                    {/* User Info */}
-                    <td>{user?.name || "Loading..."}</td>
-                    <td>{user?.phoneno || "Loading..."}</td>
-                    <td className="address-col">{user?.address || "Loading..."}</td>
+                    <td className="address-col">{order.address}</td>
 
-                    {/* Product Info */}
-                    <td>{product?.productname || "Loading..."}</td>
+                    {/* ✅ PRODUCT FIX */}
+                    <td className="product-col">
+                      <div
+                        className="product-text"
+                        title={product?.productname}
+                      >
+                        {product?.productname || "Loading..."}
+                      </div>
+                    </td>
 
-                    <td>
+                    {/* ✅ IMAGE FIX */}
+                    <td className="image-col">
                       {product && (
                         <img
                           src={`http://localhost:8080/api/products/image/${order.productid}`}
@@ -123,10 +129,15 @@ function AdminOrders() {
                       )}
                     </td>
 
-                    {/* Order Info */}
-                    <td>{order.payment_Status}</td>
+                    <td className="success">{order.payment_Status}</td>
 
-                    <td className={order.order_status.toLowerCase()}>
+                    <td
+                      className={
+                        order.order_status
+                          .toLowerCase()
+                          .replace(" ", "-")
+                      }
+                    >
                       {order.order_status}
                     </td>
 

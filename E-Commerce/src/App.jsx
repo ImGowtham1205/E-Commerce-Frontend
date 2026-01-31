@@ -14,6 +14,7 @@ import CategoryProducts from "./pages/CategoryProducts";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import Orders from "./pages/Orders";
+import DeleteAccount from "./pages/DeleteAccount";
 
 /* ===== ADMIN PAGES ===== */
 import AdminWelcome from "./pages/AdminWelcome";
@@ -50,7 +51,8 @@ function App() {
         <Route path="/orders" element={<UserRoute><Orders /></UserRoute>} />
         <Route path="/userinfo" element={<UserRoute><UserInfo /></UserRoute>} />
         <Route path="/changepassword" element={<UserRoute><ChangePassword /></UserRoute>} />
-
+        <Route path="/delete-account" element={<DeleteAccount />} />
+        
         {/* ===== ADMIN ROUTES ===== */}
         <Route path="/admin" element={<AdminRoute><AdminWelcome /></AdminRoute>} />
         <Route path="/admin/profile" element={<AdminRoute><AdminProfile /></AdminRoute>} />

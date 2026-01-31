@@ -5,7 +5,6 @@ import "../styles/Welcome.css";
 
 function Welcome() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [search, setSearch] = useState("");
   const [welcomeText, setWelcomeText] = useState("");
 
   const navigate = useNavigate();
@@ -51,7 +50,7 @@ function Welcome() {
           <li onClick={() => navigate("/changepassword")}>
             🔑 Change Password
           </li>
-          <li className="danger">🗑 Delete Account</li>
+          <li className="danger" onClick={() => navigate("/delete-account")}>🗑 Delete Account</li>
           <li className="logout" onClick={handleLogout}>
             🚪 Logout
           </li>
@@ -68,16 +67,7 @@ function Welcome() {
       {/* Main Content */}
       <main className="content">
         <div className="category-header">
-          <h2>Choose Your Category</h2>
-
-          <div className="search-box">
-            <input
-              type="text"
-              placeholder="Search categories..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
+          <h2>Choose Your Category</h2>     
         </div>
 
         <div className="category-grid">
