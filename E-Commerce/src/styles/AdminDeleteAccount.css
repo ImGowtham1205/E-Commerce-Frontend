@@ -1,0 +1,94 @@
+/* ===== WARNING TEXT ===== */
+.warning-text {
+  color: #b91c1c;
+  margin-bottom: 24px;
+  font-size: 15px;
+}
+
+/* ===== DELETE CARD ===== */
+.delete-card {
+  max-width: 420px;
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.delete-card label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #020617;
+}
+
+.delete-card input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #cbd5f5;
+  margin-bottom: 18px;
+  font-size: 15px;
+}
+
+.delete-card input:focus {
+  outline: none;
+  border-color: #ef4444;
+}
+
+/* ===== DELETE BUTTON ===== */
+.delete-card button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(90deg, #dc2626, #b91c1c);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.delete-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(220, 38, 38, 0.35);
+}
+
+.delete-card button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* ===== SERVER MESSAGE ===== */
+.server-message {
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  animation: fadeIn 0.3s ease;
+}
+
+.server-message.success {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #86efac;
+}
+
+.server-message.error {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
