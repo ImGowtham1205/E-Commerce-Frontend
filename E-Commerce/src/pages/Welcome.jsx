@@ -9,11 +9,18 @@ function Welcome() {
 
   const navigate = useNavigate();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+  try {
+    await api.post("/api/user/logout");
+  } catch (err) {
+    console.error("Logout API failed", err);
+  } finally {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     navigate("/login");
-  };
+  }
+};
+
 
   useEffect(() => {
     const fetchWelcome = async () => {

@@ -14,11 +14,17 @@ function AdminProducts() {
 
   const navigate = useNavigate();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+  try {
+    await api.post("/api/admin/logout");
+  } catch (err) {
+    console.error("Logout API failed", err);
+  } finally {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     navigate("/login");
-  };
+  }
+};
 
   // ===== FETCH PRODUCTS =====
   const fetchProducts = async (selectedCategory = "all") => {

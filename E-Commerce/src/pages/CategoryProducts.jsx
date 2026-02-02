@@ -11,11 +11,17 @@ function CategoryProducts() {
   const [products, setProducts] = useState([]);
   const [welcomeText, setWelcomeText] = useState("");
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+  try {
+    await api.post("/api/user/logout");
+  } catch (err) {
+    console.error("Logout API failed", err);
+  } finally {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     navigate("/login");
-  };
+  }
+};
 
   useEffect(() => {
     const fetchData = async () => {
