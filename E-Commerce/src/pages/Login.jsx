@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+import { FaAmazon } from "react-icons/fa";
 import api from "../api/axiosConfig";
 import "../styles/Login.css";
 import logo from "../assets/azcart-logo.jpeg";
@@ -12,7 +14,7 @@ function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // ⏱ Auto-clear error message
+  // Auto clear error message
   useEffect(() => {
     if (error) {
       const timer = setTimeout(() => setError(""), 3000);
@@ -64,7 +66,6 @@ function Login() {
         setError("Server not reachable");
       }
     } finally {
-      // 🔥 THIS FIXES THE STUCK BUTTON
       setLoading(false);
     }
   };
@@ -72,6 +73,7 @@ function Login() {
   return (
     <div className="login-container">
       <form className="login-card" onSubmit={handleSubmit} noValidate>
+
         <img src={logo} alt="AZCART Logo" className="login-logo" />
         <h2>AZCART LOGIN</h2>
 
@@ -110,6 +112,33 @@ function Login() {
         <div className="signup-text">
           Don’t have an account? <Link to="/register">Sign up</Link>
         </div>
+
+        {/* OAuth Divider */}
+        <div className="oauth-divider">
+          <span>OR</span>
+        </div>
+
+        {/* OAuth Buttons */}
+        <div className="oauth-buttons">
+
+          <a
+            href="http://localhost:8080/oauth2/authorization/google"
+            className="oauth-btn google-btn"
+          >
+            <FcGoogle className="oauth-icon" />
+            Continue with Google
+          </a>
+
+          <a
+            href="http://localhost:8080/oauth2/authorization/amazon"
+            className="oauth-btn amazon-btn"
+          >
+            <FaAmazon className="oauth-icon" />
+            Continue with Amazon
+          </a>
+
+        </div>
+
       </form>
     </div>
   );

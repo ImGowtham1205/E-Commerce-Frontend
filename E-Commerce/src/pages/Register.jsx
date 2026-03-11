@@ -11,7 +11,7 @@ function Register() {
     name: "",
     email: "",
     phoneno: "",
-    address: "", // ✅ Added
+    address: "", 
     password: ""
   });
 

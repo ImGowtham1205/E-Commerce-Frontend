@@ -1,0 +1,93 @@
+.profile-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f5f6fa;
+  padding: 20px;
+}
+
+.profile-card {
+  width: 100%;
+  max-width: 450px;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.profile-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-group input,
+.input-group textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+textarea {
+  resize: none;
+  height: 90px;
+}
+
+.password-rules {
+  background: #f1f3f6;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 13px;
+}
+
+.password-rules ul {
+  margin: 5px 0 0 15px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: #2d89ff;
+  color: white;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1b6fe0;
+}
+
+.profile-message {
+  text-align: center;
+  margin-top: 10px;
+  color: green;
+}
+
+/* Responsive */
+
+@media (max-width: 480px) {
+
+  .profile-card {
+    padding: 20px;
+  }
+
+  .profile-card h2 {
+    font-size: 20px;
+  }
+
+}
