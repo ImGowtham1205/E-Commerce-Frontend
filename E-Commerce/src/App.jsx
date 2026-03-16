@@ -1,3 +1,4 @@
+// App.jsx
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 /* ===== PUBLIC PAGES ===== */
@@ -16,7 +17,7 @@ import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import Orders from "./pages/Orders";
 import DeleteAccount from "./pages/DeleteAccount";
-import CompleteProfile from "./pages/CompleteProfile"; // ✅ NEW
+import CompleteProfile from "./pages/CompleteProfile";
 
 /* ===== ADMIN PAGES ===== */
 import AdminWelcome from "./pages/AdminWelcome";
@@ -36,7 +37,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-
         {/* ===== DEFAULT ===== */}
         <Route path="/" element={<Navigate to="/login" replace />} />
 
@@ -45,13 +45,9 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-
-        {/* OAuth redirect handler */}
         <Route path="/oauth-success" element={<OAuthSuccess />} />
 
         {/* ===== USER ROUTES ===== */}
-
-        {/* COMPLETE PROFILE PAGE */}
         <Route
           path="/complete-profile"
           element={
@@ -60,7 +56,6 @@ function App() {
             </UserRoute>
           }
         />
-
         <Route
           path="/welcome"
           element={
@@ -69,7 +64,6 @@ function App() {
             </UserRoute>
           }
         />
-
         <Route
           path="/category/:category"
           element={
@@ -78,7 +72,6 @@ function App() {
             </UserRoute>
           }
         />
-
         <Route
           path="/product/:id"
           element={
@@ -87,7 +80,6 @@ function App() {
             </UserRoute>
           }
         />
-
         <Route
           path="/cart"
           element={
@@ -96,7 +88,6 @@ function App() {
             </UserRoute>
           }
         />
-
         <Route
           path="/orders"
           element={
@@ -105,7 +96,6 @@ function App() {
             </UserRoute>
           }
         />
-
         <Route
           path="/userinfo"
           element={
@@ -114,7 +104,6 @@ function App() {
             </UserRoute>
           }
         />
-
         <Route
           path="/changepassword"
           element={
@@ -123,7 +112,6 @@ function App() {
             </UserRoute>
           }
         />
-
         <Route
           path="/delete-account"
           element={
@@ -134,7 +122,6 @@ function App() {
         />
 
         {/* ===== ADMIN ROUTES ===== */}
-
         <Route
           path="/admin"
           element={
@@ -143,7 +130,6 @@ function App() {
             </AdminRoute>
           }
         />
-
         <Route
           path="/admin/profile"
           element={
@@ -152,7 +138,6 @@ function App() {
             </AdminRoute>
           }
         />
-
         <Route
           path="/admin/add-product"
           element={
@@ -161,7 +146,6 @@ function App() {
             </AdminRoute>
           }
         />
-
         <Route
           path="/admin/products"
           element={
@@ -170,7 +154,6 @@ function App() {
             </AdminRoute>
           }
         />
-
         <Route
           path="/admin/edit-product/:id"
           element={
@@ -179,7 +162,6 @@ function App() {
             </AdminRoute>
           }
         />
-
         <Route
           path="/admin/change-password"
           element={
@@ -188,7 +170,6 @@ function App() {
             </AdminRoute>
           }
         />
-
         <Route
           path="/admin/orders"
           element={
@@ -197,7 +178,6 @@ function App() {
             </AdminRoute>
           }
         />
-
         <Route
           path="/admin/delete-account"
           element={
@@ -209,7 +189,6 @@ function App() {
 
         {/* ===== FALLBACK ===== */}
         <Route path="*" element={<Navigate to="/login" replace />} />
-
       </Routes>
     </BrowserRouter>
   );
