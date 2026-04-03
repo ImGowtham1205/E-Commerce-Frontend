@@ -13,7 +13,7 @@ function CategoryProducts() {
 
   const handleLogout = async () => {
   try {
-    await api.post("/api/user/logout");
+    await api.post("/authservice/auth/api/user/logout");
   } catch (err) {
     console.error("Logout API failed", err);
   } finally {
@@ -27,11 +27,11 @@ function CategoryProducts() {
     const fetchData = async () => {
       try {
         // Fetch welcome text
-        const welcomeRes = await api.get("/api/user/home");
+        const welcomeRes = await api.get("/authservice/auth/api/user/home");
         setWelcomeText(welcomeRes.data);
 
         // Fetch products by category
-        const productRes = await api.get(`/api/products/${category}`);
+        const productRes = await api.get(`/product-service/api/products/${category}`);
         setProducts(productRes.data);
       } catch (err) {
         console.error("Category page error", err);
@@ -95,7 +95,7 @@ function CategoryProducts() {
                 style={{ cursor: "pointer" }}
               >
                 <img
-                  src={`http://localhost:8080/api/products/image/${product.id}`}
+                  src={`http://localhost:8765/product-service/api/products/image/${product.id}`}
                   alt={product.productname}
                 />
                 <h3>{product.productname}</h3>

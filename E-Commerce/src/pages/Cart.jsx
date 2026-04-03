@@ -15,7 +15,7 @@ function Cart() {
   /* ===== LOGOUT ===== */
   const handleLogout = async () => {
   try {
-    await api.post("/api/user/logout");
+    await api.post("/authservice/auth/api/user/logout");
   } catch (err) {
     console.error("Logout API failed", err);
   } finally {
@@ -34,7 +34,7 @@ function Cart() {
   /* ===== FETCH WELCOME TEXT ===== */
   const fetchWelcomeText = async () => {
     try {
-      const res = await api.get("/api/user/home");
+      const res = await api.get("/authservice/auth/api/user/home");
       setWelcomeText(res.data);
     } catch (err) {
       console.error(err);
@@ -44,18 +44,18 @@ function Cart() {
   /* ===== FETCH CART ITEMS ===== */
   const fetchCartItems = async () => {
     try {
-      const cartRes = await api.get("/api/user/getcartitem");
+      const cartRes = await api.get("/cart-service/api/user/getcartitem");
 
       const enriched = await Promise.all(
         cartRes.data.map(async (item) => {
           const productRes = await api.get(
-            `/api/products/details/${item.productId}`
+            `/product-service/api/products/details/${item.productId}`
           );
 
           return {
             ...item,
             product: productRes.data,
-            imageUrl: `${api.defaults.baseURL}/api/products/image/${item.productId}`
+            imageUrl: `${api.defaults.baseURL}/product-service/api/products/image/${item.productId}`
           };
         })
       );
@@ -73,7 +73,7 @@ function Cart() {
     e.stopPropagation(); 
 
     try {
-      await api.delete("/api/user/deletecartitem", {
+      await api.delete("/cart-service/api/user/deletecartitem", {
         data: cartId
       });
 
@@ -91,7 +91,7 @@ function Cart() {
     if (quantity < 1) return;
 
     try {
-      await api.put("/api/user/updatequantity", {
+      await api.put("/cart-service/api/user/updatequantity", {
         id: cartId,
         productId,
         userId,

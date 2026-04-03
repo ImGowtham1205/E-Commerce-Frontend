@@ -24,7 +24,7 @@ function ChangePassword() {
   /* 🔹 Logout */
   const handleLogout = async () => {
   try {
-    await api.post("/api/user/logout");
+    await api.post("/authservice/auth/api/user/logout");
   } catch (err) {
     console.error("Logout API failed", err);
   } finally {
@@ -38,7 +38,7 @@ function ChangePassword() {
   useEffect(() => {
     const fetchWelcome = async () => {
       try {
-        const response = await api.get("/api/user/home");
+        const response = await api.get("/authservice/auth/api/user/home");
         setWelcomeText(response.data);
       } catch (error) {
         console.error("Failed to load welcome message", error);
@@ -94,7 +94,7 @@ function ChangePassword() {
     }
 
     try {
-      const response = await api.put("/api/user/changepassword", {
+      const response = await api.put("/authservice/auth/api/user/changepassword", {
         currentpassword: currentPassword,
         newpassword: newPassword,
       });

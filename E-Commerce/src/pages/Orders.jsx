@@ -22,7 +22,7 @@ function Orders() {
   // Logout
   const handleLogout = async () => {
   try {
-    await api.post("/api/user/logout");
+    await api.post("/authservice/auth/api/user/logout");
   } catch (err) {
     console.error("Logout API failed", err);
   } finally {
@@ -36,7 +36,7 @@ function Orders() {
   useEffect(() => {
     const fetchWelcome = async () => {
       try {
-        const res = await api.get("/api/user/home");
+        const res = await api.get("/authservice/auth/api/user/home");
         setWelcomeText(res.data);
       } catch (err) {
         console.error("Welcome API error", err);
@@ -50,14 +50,14 @@ function Orders() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await api.get("/api/user/fetchorder");
+        const res = await api.get("/order-service/api/user/fetchorder");
         setOrders(res.data);
 
         // Fetch product details for each order
         res.data.forEach(async (order) => {
           try {
             const productRes = await api.get(
-              `/api/products/details/${order.productid}`
+              `/product-service/api/products/details/${order.productid}`
             );
 
             setProducts((prev) => ({
@@ -88,7 +88,7 @@ function Orders() {
     const toastId = toast.loading("Cancelling order...");
 
     try {
-      await api.delete(`/api/user/cancelorder/${selectedOrderId}`);
+      await api.delete(`/order-service/api/user/cancelorder/${selectedOrderId}`);
 
       // Update order status in UI
       setOrders((prev) =>
@@ -166,7 +166,7 @@ function Orders() {
                 <div key={order.orderid} className="order-card">
                   {/* Product Image */}
                   <img
-                    src={`${api.defaults.baseURL}/api/products/image/${order.productid}`}
+                    src={`${api.defaults.baseURL}/product-service/api/products/image/${order.productid}`}
                     alt="Product"
                   />
 

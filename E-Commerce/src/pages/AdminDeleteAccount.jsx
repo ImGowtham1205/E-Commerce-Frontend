@@ -16,7 +16,7 @@ function AdminDeleteAccount() {
   /* ===== LOGOUT ===== */
   const handleLogout = async () => {
   try {
-    await api.post("/api/admin/logout");
+    await api.post("/authservice/auth/api/admin/logout");
   } catch (err) {
     console.error("Logout API failed", err);
   } finally {
@@ -51,12 +51,11 @@ function AdminDeleteAccount() {
     try {
       setLoading(true);
 
-      const res = await api.delete("/api/admin/accountdeletion", {
-        data: password, // ✅ raw string for @RequestBody String password
-        headers: {
-          "Content-Type": "text/plain",
-        },
-      });
+      const res = await api.delete("/authservice/auth/api/admin/accountdeletion",
+        {
+          data: { password }, 
+        }
+      );
 
       showMessage(res.data || "Account deleted successfully", "success");
     } catch (err) {
@@ -82,15 +81,12 @@ function AdminDeleteAccount() {
       {/* ===== SIDEBAR ===== */}
       <aside className={`admin-sidebar ${menuOpen ? "open" : ""}`}>
         <ul>
+          <li onClick={() => navigate("/admin")}>🏠 Home</li>
           <li onClick={() => navigate("/admin/profile")}>👤 Personal Info</li>
           <li onClick={() => navigate("/admin/add-product")}>➕ Add Product</li>
-          <li onClick={() => navigate("/admin/products")}>
-            📦 Manage Products
-          </li>
+          <li onClick={() => navigate("/admin/products")}>📦 Manage Products </li>
           <li onClick={() => navigate("/admin/orders")}>🧾 Manage Orders</li>
-          <li onClick={() => navigate("/admin/change-password")}>
-            🔑 Change Password
-          </li>
+          <li onClick={() => navigate("/admin/change-password")}>🔑 Change Password</li>
           <li className="danger">🗑 Delete Account</li>
           <li className="logout" onClick={handleLogout}>
             🚪 Logout

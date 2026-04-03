@@ -13,7 +13,7 @@ function UserInfo() {
   
   const handleLogout = async () => {
   try {
-    await api.post("/api/user/logout");
+    await api.post("/authservice/auth/api/user/logout");
   } catch (err) {
     console.error("Logout API failed", err);
   } finally {
@@ -27,11 +27,11 @@ function UserInfo() {
     const fetchData = async () => {
       try {
         // 🔹 Fetch welcome text
-        const welcomeRes = await api.get("/api/user/home");
+        const welcomeRes = await api.get("/authservice/auth/api/user/home");
         setWelcomeText(welcomeRes.data);
 
         // 🔹 Fetch user info
-        const userRes = await api.get("/api/user/userinfo");
+        const userRes = await api.get("/authservice/auth/api/user/userinfo");
         setUser(userRes.data);
       } catch (err) {
         setError("Failed to load user information");

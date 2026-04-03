@@ -33,7 +33,7 @@ function ForgotPassword() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/forgot-password",
+        "http://localhost:8765/authservice/auth/forgot-password",
         { email },
         { validateStatus: () => true }
       );

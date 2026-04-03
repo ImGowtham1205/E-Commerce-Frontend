@@ -16,7 +16,7 @@ function AdminProducts() {
 
   const handleLogout = async () => {
   try {
-    await api.post("/api/admin/logout");
+    await api.post("/authservice/auth/api/admin/logout");
   } catch (err) {
     console.error("Logout API failed", err);
   } finally {
@@ -31,8 +31,8 @@ function AdminProducts() {
     try {
       const res =
         selectedCategory === "all"
-          ? await api.get("/api/products")
-          : await api.get(`/api/products/${selectedCategory}`);
+          ? await api.get("/product-service/api/products")
+          : await api.get(`/product-service/api/products/${selectedCategory}`);
 
       setProducts(res.data);
     } catch (err) {
@@ -56,7 +56,7 @@ function AdminProducts() {
   const handleConfirmDelete = async () => {
     try {
       const res = await api.delete(
-        `/api/admin/deleteproduct/${deleteProduct.id}`
+        `/product-service/api/admin/deleteproduct//${deleteProduct.id}`
       );
 
       // show backend message
@@ -96,6 +96,7 @@ function AdminProducts() {
       {/* ===== SIDEBAR ===== */}
       <aside className={`admin-sidebar ${menuOpen ? "open" : ""}`}>
         <ul>
+          <li onClick={() => navigate("/admin")}>🏠 Home</li>
           <li onClick={() => navigate("/admin/profile")}>👤 Personal Info</li>
           <li onClick={() => navigate("/admin/add-product")}>➕ Add Product</li>
           <li onClick={() => navigate("/admin/products")}>📦 Manage Products</li>
@@ -156,7 +157,7 @@ function AdminProducts() {
               )}
 
               <img
-                src={`http://localhost:8080/api/products/image/${product.id}`}
+                src={`http://localhost:8765/product-service/api/products/image/${product.id}`}
                 alt={product.productname}
                 className="product-image"
               />

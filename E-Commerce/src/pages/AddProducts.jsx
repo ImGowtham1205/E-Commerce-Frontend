@@ -24,7 +24,7 @@ function AddProduct() {
 
   const handleLogout = async () => {
   try {
-    await api.post("/api/admin/logout");
+    await api.post("/authservice/auth/api/admin/logout");
   } catch (err) {
     console.error("Logout API failed", err);
   } finally {
@@ -118,7 +118,7 @@ function AddProduct() {
       );
       data.append("file", image);
 
-      const res = await api.post("/api/admin/addproduct", data, {
+      const res = await api.post("/product-service/api/admin/addproduct", data, {
         headers: { "Content-Type": "multipart/form-data" }
       });
 
@@ -159,9 +159,7 @@ function AddProduct() {
           <li onClick={() => navigate("/admin/add-product")}>➕ Add Product</li>
            <li onClick={() => navigate("/admin/products")}>📦 Manage Products </li>
           <li onClick={() => navigate("/admin/change-password")}>🔑 Change Password</li>
-          <li className="danger" onClick={() => navigate("/admin/delete-account")}>
-            🗑 Delete Account
-          </li>
+          <li className="danger" onClick={() => navigate("/admin/delete-account")}>🗑 Delete Account</li>
           <li className="logout" onClick={handleLogout}>🚪 Logout</li>
         </ul>
       </aside>

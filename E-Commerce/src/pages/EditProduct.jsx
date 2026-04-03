@@ -26,7 +26,7 @@ function EditProduct() {
 
   const handleLogout = async () => {
   try {
-    await api.post("/api/admin/logout");
+    await api.post("/authservice/auth/api/admin/logout");
   } catch (err) {
     console.error("Logout API failed", err);
   } finally {
@@ -40,9 +40,9 @@ function EditProduct() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await api.get(`/api/products/details/${id}`);
+        const res = await api.get(`/product-service/api/products/details/${id}`);
         setFormData(res.data);
-        setPreview(`http://localhost:8080/api/products/image/${id}`);
+        setPreview(`http://localhost:8765/product-service/api/products/image/${id}`);
       } catch (err) {
         console.error("Failed to load product", err);
       }
@@ -107,7 +107,7 @@ function EditProduct() {
         data.append("file", image);
       }
 
-      const res = await api.put("/api/admin/updateproduct", data, {
+      const res = await api.put("/product-service/api/admin/updateproduct", data, {
         headers: { "Content-Type": "multipart/form-data" }
       });
 

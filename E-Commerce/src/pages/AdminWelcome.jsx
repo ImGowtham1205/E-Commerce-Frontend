@@ -10,7 +10,7 @@ function AdminWelcome() {
 
    const handleLogout = async () => {
   try {
-    await api.post("/api/admin/logout");
+    await api.post("/authservice/auth/api/admin/logout");
   } catch (err) {
     console.error("Logout API failed", err);
   } finally {
@@ -24,11 +24,11 @@ function AdminWelcome() {
   useEffect(() => {
     const fetchAdminName = async () => {
       try {
-        const res = await api.get("/api/admin/home");
-        setWelcomeText(res.data);   // e.g. "Welcome , John"
+        const res = await api.get("/authservice/auth/api/admin/home");
+        setWelcomeText(res.data);   
       } catch (err) {
         console.error("Admin fetch error", err);
-        handleLogout(); // Token invalid → logout
+        handleLogout(); 
       }
     };
 

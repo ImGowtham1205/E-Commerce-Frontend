@@ -30,7 +30,7 @@ function CompleteProfile() {
 
     try {
 
-      const response = await api.put("/api/user/complete-profile", {
+      const response = await api.put("/authservice/auth/api/user/complete-profile", {
         address: address.trim(),
         phoneno: phoneno.trim(),
         password: password.trim()

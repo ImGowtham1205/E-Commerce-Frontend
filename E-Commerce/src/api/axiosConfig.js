@@ -1,24 +1,40 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "http://localhost:8765",
   withCredentials: true,
   headers: {
-    "Content-Type": "application/json"
-  }
+    "Content-Type": "application/json",
+  },
 });
+
+/* ================= PUBLIC ENDPOINTS ================= */
+const publicEndpoints = [
+  "/login",
+  "/register",
+  "/forgot-password",
+  "/reset-password",
+];
+
+/* ================= REFRESH HANDLING ================= */
+let isRefreshing = false;
+let failedQueue = [];
+
+const processQueue = (error, token = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+  failedQueue = [];
+};
 
 /* ================= REQUEST INTERCEPTOR ================= */
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
-
-    const publicEndpoints = [
-      "/login",
-      "/register",
-      "/forgot-password",
-      "/reset-password"
-    ];
 
     const isPublic = publicEndpoints.some((url) =>
       config.url?.includes(url)
@@ -36,38 +52,80 @@ api.interceptors.request.use(
 /* ================= RESPONSE INTERCEPTOR ================= */
 api.interceptors.response.use(
   (response) => {
-    // 🔁 Refresh token if backend sends one
-    const authHeader = response.headers["authorization"];
+    // 🔥 Read token from gateway (X-Auth-Token preferred)
+    const authHeader =
+      response.headers["x-auth-token"] ||
+      response.headers["authorization"];
 
     if (authHeader && authHeader.startsWith("Bearer ")) {
       const newToken = authHeader.replace("Bearer ", "");
       localStorage.setItem("token", newToken);
+      console.log("✅ Token updated:", newToken);
     }
 
     return response;
   },
-  (error) => {
-    const originalUrl = error.config?.url || "";
 
-    const publicEndpoints = [
-      "/login",
-      "/register",
-      "/forgot-password",
-      "/reset-password"
-    ];
+  async (error) => {
+    const originalRequest = error.config;
 
-    const isPublic = publicEndpoints.some(url =>
-      originalUrl.includes(url)
+    if (!originalRequest) return Promise.reject(error);
+
+    const isPublic = publicEndpoints.some((url) =>
+      originalRequest.url?.includes(url)
     );
 
-    // 🔴 Auto logout ONLY for protected API calls
-    if (error.response?.status === 401 && !isPublic) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("role");
-      window.location.href = "/login";
+    // ❌ Do not retry public APIs
+    if (isPublic) {
+      return Promise.reject(error);
     }
 
-    // ❗Let Login.jsx handle 401 errors
+    // 🔥 Handle 401 with retry
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      if (isRefreshing) {
+        // ⏳ Queue requests while refreshing
+        return new Promise((resolve, reject) => {
+          failedQueue.push({
+            resolve: (token) => {
+              originalRequest.headers.Authorization = `Bearer ${token}`;
+              resolve(api(originalRequest));
+            },
+            reject: (err) => reject(err),
+          });
+        });
+      }
+
+      isRefreshing = true;
+
+      try {
+        // 🔥 Get latest token from storage (set by previous response)
+        const newToken = localStorage.getItem("token");
+
+        if (!newToken) {
+          throw new Error("No token available");
+        }
+
+        processQueue(null, newToken);
+
+        originalRequest.headers.Authorization = `Bearer ${newToken}`;
+        return api(originalRequest);
+
+      } catch (err) {
+        processQueue(err, null);
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
+
+        window.location.href = "/login";
+        return Promise.reject(err);
+
+      } finally {
+        isRefreshing = false;
+      }
+    }
+
     return Promise.reject(error);
   }
 );

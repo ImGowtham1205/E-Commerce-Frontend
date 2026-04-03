@@ -11,7 +11,7 @@ function Welcome() {
 
   const handleLogout = async () => {
   try {
-    await api.post("/api/user/logout");
+    await api.post("/authservice/auth/api/user/logout");
   } catch (err) {
     console.error("Logout API failed", err);
   } finally {
@@ -25,7 +25,7 @@ function Welcome() {
   useEffect(() => {
     const fetchWelcome = async () => {
       try {
-        const res = await api.get("/api/user/home");
+        const res = await api.get("/authservice/auth/api/user/home");
         setWelcomeText(res.data);
       } catch (err) {
         console.error("Failed to load welcome message", err);

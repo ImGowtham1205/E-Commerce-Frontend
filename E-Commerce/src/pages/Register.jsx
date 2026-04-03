@@ -74,7 +74,7 @@ function Register() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/register",
+        "http://localhost:8765/authservice/auth/register",
         formData,
         { validateStatus: () => true }
       );

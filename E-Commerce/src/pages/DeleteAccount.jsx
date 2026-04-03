@@ -16,7 +16,7 @@ function DeleteAccount() {
   // Logout handler
   const handleLogout = async () => {
   try {
-    await api.post("/api/user/logout");
+    await api.post("/authservice/auth/api/user/logout");
   } catch (err) {
     console.error("Logout API failed", err);
   } finally {
@@ -30,7 +30,7 @@ function DeleteAccount() {
   useEffect(() => {
     const fetchWelcome = async () => {
       try {
-        const res = await api.get("/api/user/home");
+        const res = await api.get("/authservice/auth/api/user/home");
         setWelcomeText(res.data);
       } catch (err) {
         console.error("Failed to load welcome message", err);
@@ -42,39 +42,37 @@ function DeleteAccount() {
 
   // Delete account handler
   const handleDeleteAccount = async (e) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
+  e.preventDefault();
+  setError("");
+  setSuccess("");
 
-    if (!password) {
-      setError("Password is required");
-      return;
-    }
+  if (!password) {
+    setError("Password is required");
+    return;
+  }
 
-    try {
-      setLoading(true);
+  try {
+    setLoading(true);
 
-      const res = await api.delete("/api/user/accountdeletion", {
-        data: password,
-        headers: {
-          "Content-Type": "text/plain"
-        }
-      });
+    const res = await api.delete(
+      "/authservice/auth/api/user/accountdeletion",
+      {
+        data: { password },
+      }
+    );
 
-      setSuccess(res.data || "Account deleted successfully");
+    setSuccess(res.data || "Account deleted successfully"); 
+  } catch (err) {
+    const message =
+      err.response?.data ||
+      err.response?.data?.message ||
+      "Failed to delete account";
 
-      setTimeout(() => {
-        handleLogout();
-      }, 1500);
-
-    } catch (err) {
-      setError(
-        err.response?.data || "Account deletion failed. Please check your password."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+    setError(message); 
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="app-container">

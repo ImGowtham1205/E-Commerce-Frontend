@@ -29,7 +29,7 @@ function OAuthSuccess() {
 
       try {
 
-        const response = await api.get("/api/user/userinfo");
+        const response = await api.get("/authservice/auth/api/user/userinfo");
 
         const user = response.data;
 

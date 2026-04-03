@@ -33,7 +33,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await api.post("/login", {
+      const response = await api.post("/authservice/auth/login", {
         email: email.trim(),
         password: password.trim()
       });
@@ -114,30 +114,31 @@ function Login() {
         </div>
 
         {/* OAuth Divider */}
-        <div className="oauth-divider">
-          <span>OR</span>
-        </div>
-
-        {/* OAuth Buttons */}
         <div className="oauth-buttons">
 
-          <a
-            href="http://localhost:8080/oauth2/authorization/google"
-            className="oauth-btn google-btn"
-          >
-            <FcGoogle className="oauth-icon" />
-            Continue with Google
-          </a>
+  <button
+    type="button"
+    className="oauth-btn google-btn"
+    onClick={() => {
+      window.location.href = "http://localhost:8765/authservice/oauth2/authorization/google";
+    }}
+  >
+    <FcGoogle className="oauth-icon" />
+    Continue with Google
+  </button>
 
-          <a
-            href="http://localhost:8080/oauth2/authorization/amazon"
-            className="oauth-btn amazon-btn"
-          >
-            <FaAmazon className="oauth-icon" />
-            Continue with Amazon
-          </a>
+  <button
+    type="button"
+    className="oauth-btn amazon-btn"
+    onClick={() => {
+      window.location.href = "http://localhost:8765/authservice/oauth2/authorization/amazon";
+    }}
+  >
+    <FaAmazon className="oauth-icon" />
+    Continue with Amazon
+  </button>
 
-        </div>
+</div>
 
       </form>
     </div>

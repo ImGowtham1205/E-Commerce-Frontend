@@ -12,7 +12,7 @@ function AdminOrders() {
   // Logout
   const handleLogout = async () => {
   try {
-    await api.post("/api/admin/logout");
+    await api.post("/authservice/auth/api/admin/logout");
   } catch (err) {
     console.error("Logout API failed", err);
   } finally {
@@ -26,13 +26,13 @@ function AdminOrders() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await api.get("/api/admin/fetchorders");
+        const res = await api.get("/order-service/api/admin/fetchorders");
         setOrders(res.data);
 
         res.data.forEach(async (order) => {
           if (!products[order.productid]) {
             const prodRes = await api.get(
-              `/api/products/details/${order.productid}`
+              `/product-service/api/products/details/${order.productid}`
             );
             setProducts((prev) => ({
               ...prev,
@@ -61,21 +61,13 @@ function AdminOrders() {
       {/* ===== SIDEBAR ===== */}
       <aside className={`admin-sidebar ${menuOpen ? "open" : ""}`}>
         <ul>
+          <li onClick={() => navigate("/admin")}>🏠 Home</li>
           <li onClick={() => navigate("/admin/profile")}>👤 Personal Info</li>
           <li onClick={() => navigate("/admin/add-product")}>➕ Add Product</li>
           <li onClick={() => navigate("/admin/products")}>📦 Manage Products</li>
-          <li onClick={() => navigate("/admin/change-password")}>
-            🔑 Change Password
-          </li>
-          <li
-            className="danger"
-            onClick={() => navigate("/admin/delete-account")}
-          >
-            🗑 Delete Account
-          </li>
-          <li className="logout" onClick={handleLogout}>
-            🚪 Logout
-          </li>
+          <li onClick={() => navigate("/admin/change-password")}>🔑 Change Password</li>
+          <li className="danger"onClick={() => navigate("/admin/delete-account")}>🗑 Delete Account </li>
+          <li className="logout" onClick={handleLogout}>🚪 Logout</li>
         </ul>
       </aside>
 
@@ -128,7 +120,7 @@ function AdminOrders() {
                     <td className="image-col">
                       {product && (
                         <img
-                          src={`http://localhost:8080/api/products/image/${order.productid}`}
+                          src={`http://localhost:8765/product-service/api/products/image/${order.productid}`}
                           alt="product"
                           className="order-img"
                         />

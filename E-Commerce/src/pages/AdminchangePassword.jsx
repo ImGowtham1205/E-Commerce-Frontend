@@ -21,7 +21,7 @@ function AdminChangePassword() {
   /* ================= Logout ================= */
   const handleLogout = async () => {
   try {
-    await api.post("/api/admin/logout");
+    await api.post("/authservice/auth/api/admin/logout");
   } catch (err) {
     console.error("Logout API failed", err);
   } finally {
@@ -82,7 +82,7 @@ function AdminChangePassword() {
 
     try {
       setLoading(true);
-      const res = await api.put("/api/admin/changepassword", {
+      const res = await api.put("/authservice/auth/api/admin/changepassword", {
         currentpassword: currentPassword,
         newpassword: newPassword,
       });
@@ -112,13 +112,12 @@ function AdminChangePassword() {
       {/* ================= Sidebar (SAME AS AdminWelcome) ================= */}
       <aside className={`admin-sidebar ${menuOpen ? "open" : ""}`}>
         <ul>
+          <li onClick={() => navigate("/admin")}>🏠 Home</li>
           <li onClick={() => navigate("/admin/profile")}>👤 Personal Info</li>
           <li onClick={() => navigate("/admin/add-product")}>➕ Add Product</li>
           <li onClick={() => navigate("/admin/products")}>📦 Manage Products </li>
           <li onClick={() => navigate("/admin/orders")}>🧾 Manage Orders</li>
-          <li className="danger" onClick={() => navigate("/admin/delete-account")}>
-            🗑 Delete Account
-          </li>
+          <li className="danger" onClick={() => navigate("/admin/delete-account")}> 🗑 Delete Account</li>
           <li className="logout" onClick={handleLogout}>
             🚪 Logout
           </li>

@@ -11,7 +11,7 @@ function AdminProfile() {
 
   const handleLogout = async () => {
   try {
-    await api.post("/api/admin/logout");
+    await api.post("/authservice/auth/api/admin/logout");
   } catch (err) {
     console.error("Logout API failed", err);
   } finally {
@@ -25,7 +25,7 @@ function AdminProfile() {
   useEffect(() => {
     const fetchAdminInfo = async () => {
       try {
-        const res = await api.get("/api/admin/admininfo");
+        const res = await api.get("/authservice/auth/api/admin/admininfo");
         setAdmin(res.data);
       } catch (err) {
         console.error("Failed to fetch admin info", err);
