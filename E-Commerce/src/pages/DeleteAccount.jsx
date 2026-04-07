@@ -61,14 +61,22 @@ function DeleteAccount() {
       }
     );
 
-    setSuccess(res.data || "Account deleted successfully"); 
+    setSuccess(res.data || "Account deleted successfully");
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+
+    setTimeout(() => {
+      navigate("/login");
+    }, 1500);
+
   } catch (err) {
     const message =
       err.response?.data ||
       err.response?.data?.message ||
       "Failed to delete account";
 
-    setError(message); 
+    setError(message);
   } finally {
     setLoading(false);
   }
@@ -94,12 +102,8 @@ function DeleteAccount() {
           <li onClick={() => navigate("/userinfo")}>👤 Personal Info</li>
           <li onClick={() => navigate("/cart")}>🛒 Cart</li>
           <li onClick={() => navigate("/orders")}>📦 Orders</li>
-          <li onClick={() => navigate("/changepassword")}>
-            🔑 Change Password
-          </li>
-          <li className="logout" onClick={handleLogout}>
-            🚪 Logout
-          </li>
+          <li onClick={() => navigate("/changepassword")}>🔑 Change Password</li>
+          <li className="logout" onClick={handleLogout}>🚪 Logout</li>
         </ul>
       </aside>
 
