@@ -86,6 +86,7 @@ function AdminOrders() {
                 <th>Phone</th>
                 <th>Address</th>
                 <th>Product</th>
+                <th>Price</th>
                 <th>Image</th>
                 <th>Payment</th>
                 <th>Status</th>
@@ -114,6 +115,10 @@ function AdminOrders() {
                       >
                         {product?.productname || "Loading..."}
                       </div>
+                    </td>
+
+                    <td className="price-col">
+                      ₹{product?.price?.toFixed(2) || "Loading..."}
                     </td>
 
                     {/* ✅ IMAGE FIX */}

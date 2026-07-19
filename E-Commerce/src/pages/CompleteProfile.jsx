@@ -46,8 +46,8 @@ function CompleteProfile() {
 
     } catch (err) {
 
-      if (err.response?.status === 400) {
-        setMessage("Invalid profile details.");
+      if (err.response?.status === 409) {
+        setMessage("Phone Number Already Exists");
       } else {
         setMessage("Failed to update profile.");
       }

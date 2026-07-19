@@ -157,8 +157,7 @@ function ProductDetails() {
       setIsProcessing(true);
 
       const orderRes = await api.post("/order-service/api/user/create", {
-        amount: Number(product.price),
-        userid: Number(userId),
+        amount: Number(product.price)
       });
 
       const order = orderRes.data;
