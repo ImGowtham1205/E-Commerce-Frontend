@@ -1,3 +1,4 @@
+
 .profile-container {
   min-height: 100vh;
   display: flex;
@@ -12,7 +13,7 @@
   max-width: 450px;
   background: white;
   padding: 30px;
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
@@ -35,7 +36,7 @@
 .input-group textarea {
   width: 100%;
   padding: 10px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   border: 1px solid #ccc;
   font-size: 14px;
 }
@@ -48,7 +49,7 @@ textarea {
 .password-rules {
   background: #f1f3f6;
   padding: 10px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   margin-bottom: 15px;
   font-size: 13px;
 }
@@ -64,7 +65,7 @@ button {
   background: #2d89ff;
   color: white;
   font-size: 16px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
 }
 

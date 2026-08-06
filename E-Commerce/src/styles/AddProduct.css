@@ -1,114 +1,111 @@
+/* =========================================================
+   ADMIN — Add / Edit Product form
+   ========================================================= */
+
 .add-product-form {
-  max-width: 500px;
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+  max-width: 560px;
+  background: var(--adm-surface);
+  border: 1px solid var(--adm-border);
+  border-radius: var(--adm-radius-lg);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .add-product-form input,
-.add-product-form textarea {
-  width: 100%;
-  padding: 12px 14px;
-  margin-bottom: 16px;
-  border-radius: 8px;
-  border: 1px solid #cbd5f5;
-  font-size: 14px;
-}
-
-.add-product-form textarea {
-  resize: none;
-  height: 90px;
-}
-
-.add-product-form button {
-  width: 100%;
-  padding: 12px;
-  background: #020617;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.add-product-form button:hover {
-  background: #1e293b;
-}
-
-.error {
-  color: #dc2626;
-  margin-bottom: 12px;
-  font-size: 14px;
-}
-
-.success {
-  color: #16a34a;
-  margin-bottom: 12px;
-  font-size: 14px;
-}
-
-/* 🔽 Category Dropdown Styling */
+.add-product-form textarea,
 .add-product-form select {
   width: 100%;
-  padding: 12px 14px;
-  margin-bottom: 16px;
-  border-radius: 8px;
-  border: 1px solid #cbd5f5;
-  font-size: 14px;
-  background-color: #ffffff;
-  color: #020617;
+}
+
+.add-product-form textarea {
+  min-height: 90px;
+  resize: vertical;
+  font-family: var(--adm-font-body);
+}
+
+.add-product-form input.invalid,
+.add-product-form textarea.invalid,
+.add-product-form select.invalid {
+  border-color: var(--adm-danger);
+}
+
+.add-product-form input[type="file"] {
+  padding: 9px 12px;
+  color: var(--adm-text-dim);
   cursor: pointer;
 }
 
-/* Remove default browser focus outline */
-.add-product-form select:focus {
-  outline: none;
-  border-color: #6366f1;
-  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.15);
+.add-product-form .error {
+  font-size: 12.5px;
+  margin-top: -8px;
 }
 
-/* Placeholder option style */
-.add-product-form select option[value=""] {
-  color: #9ca3af;
+.add-product-form .success {
+  font-size: 14px;
+  background: var(--adm-success-soft);
+  padding: 10px 14px;
+  border-radius: var(--adm-radius-sm);
 }
 
-/* Dropdown options */
-.add-product-form select option {
-  color: #020617;
+.add-product-form > p.error {
+  background: var(--adm-danger-soft);
+  padding: 10px 14px;
+  border-radius: var(--adm-radius-sm);
+  margin-top: 0;
 }
 
-.invalid {
-  border-color: #dc2626 !important;
+.add-product-form button[type="submit"] {
+  margin-top: 6px;
+  padding: 13px;
+  border: none;
+  border-radius: var(--adm-radius-sm);
+  background: var(--adm-accent);
+  color: var(--adm-accent-text);
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
 }
 
+.add-product-form button[type="submit"]:hover {
+  background: #67e3f7;
+  box-shadow: 0 8px 22px rgba(34, 211, 238, 0.25);
+}
+
+/* ===== IMAGE PREVIEW ===== */
 .image-preview {
-  margin-top: 12px;
-  margin-bottom: 20px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--adm-surface-sunken);
+  border: 1px dashed var(--adm-border-strong);
+  border-radius: var(--adm-radius-sm);
+  padding: 12px;
 }
 
 .image-preview img {
-  max-width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: var(--adm-surface);
+  padding: 4px;
 }
 
 .image-preview button {
-  margin-top: 10px;
-  padding: 6px 12px;
-  background: #dc2626;
-  color: white;
   border: none;
-  border-radius: 6px;
-  cursor: pointer;
+  background: var(--adm-danger-soft);
+  color: var(--adm-danger);
+  padding: 8px 14px;
+  border-radius: var(--adm-radius-sm);
   font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .image-preview button:hover {
-  background: #b91c1c;
+  background: var(--adm-danger);
+  color: #1a0a0a;
 }
