@@ -118,7 +118,13 @@ api.interceptors.response.use(
         localStorage.removeItem("token");
         localStorage.removeItem("role");
 
-        window.location.href = "/login";
+        // 🛡 Guard: avoid a redundant hard redirect if we're already
+        // navigating away (e.g. DeleteAccount flow already redirecting
+        // to /login). Prevents two navigations racing and blanking the page.
+        if (window.location.pathname !== "/login") {
+          window.location.href = "/login";
+        }
+
         return Promise.reject(err);
 
       } finally {

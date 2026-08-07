@@ -25,6 +25,10 @@ function OAuthSuccess() {
     localStorage.setItem("token", token);
     localStorage.setItem("role", role || "ROLE_USER");
 
+    // Clear token from the URL immediately so browser back/forward or
+    // history replay can't re-trigger this flow with a stale token
+    window.history.replaceState({}, document.title, "/oauth-success");
+
     const checkProfile = async () => {
 
       try {
@@ -41,6 +45,8 @@ function OAuthSuccess() {
 
       } catch (error) {
         console.error("User info fetch failed:", error);
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
         navigate("/login", { replace: true });
       }
     };

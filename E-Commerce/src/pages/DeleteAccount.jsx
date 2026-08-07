@@ -15,16 +15,16 @@ function DeleteAccount() {
 
   // Logout handler
   const handleLogout = async () => {
-  try {
-    await api.post("/authservice/auth/api/user/logout");
-  } catch (err) {
-    console.error("Logout API failed", err);
-  } finally {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    navigate("/login");
-  }
-};
+    try {
+      await api.post("/authservice/auth/api/user/logout");
+    } catch (err) {
+      console.error("Logout API failed", err);
+    } finally {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      navigate("/login");
+    }
+  };
 
   // Fetch welcome text
   useEffect(() => {
@@ -42,45 +42,51 @@ function DeleteAccount() {
 
   // Delete account handler
   const handleDeleteAccount = async (e) => {
-  e.preventDefault();
-  setError("");
-  setSuccess("");
+    e.preventDefault();
+    setError("");
+    setSuccess("");
 
-  if (!password) {
-    setError("Password is required");
-    return;
-  }
+    if (!password) {
+      setError("Password is required");
+      return;
+    }
 
-  try {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    const res = await api.delete(
-      "/authservice/auth/api/user/accountdeletion",
-      {
-        data: { password },
-      }
-    );
+      const res = await api.delete(
+        "/authservice/auth/api/user/accountdeletion",
+        {
+          data: { password },
+        }
+      );
 
-    setSuccess(res.data || "Account deleted successfully");
+      setSuccess(res.data || "Account deleted successfully");
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
 
-    setTimeout(() => {
-      navigate("/login");
-    }, 1500);
+      // 🔥 Hard redirect instead of navigate().
+      // Using navigate() here races with the axios interceptor's
+      // window.location.href redirect if a stray 401 fires in the
+      // meantime (token is already cleared), which was leaving the
+      // page blank until a manual refresh. A single hard redirect
+      // avoids that race entirely.
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 1500);
 
-  } catch (err) {
-    const message =
-      err.response?.data ||
-      err.response?.data?.message ||
-      "Failed to delete account";
+    } catch (err) {
+      const message =
+        err.response?.data ||
+        err.response?.data?.message ||
+        "Failed to delete account";
 
-    setError(message);
-  } finally {
-    setLoading(false);
-  }
-};
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="app-container">

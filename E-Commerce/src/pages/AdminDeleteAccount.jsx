@@ -15,16 +15,16 @@ function AdminDeleteAccount() {
 
   /* ===== LOGOUT ===== */
   const handleLogout = async () => {
-  try {
-    await api.post("/authservice/auth/api/admin/logout");
-  } catch (err) {
-    console.error("Logout API failed", err);
-  } finally {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    navigate("/login");
-  }
-};
+    try {
+      await api.post("/authservice/auth/api/admin/logout");
+    } catch (err) {
+      console.error("Logout API failed", err);
+    } finally {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      navigate("/login");
+    }
+  };
 
   /* ===== SHOW MESSAGE FOR FEW SECONDS ===== */
   const showMessage = (msg, type) => {
@@ -33,8 +33,15 @@ function AdminDeleteAccount() {
 
     setTimeout(() => {
       setMessage("");
+
       if (type === "success") {
-        handleLogout();
+        // Hard redirect instead of calling handleLogout()/navigate().
+        // After a successful delete, token is already cleared below,
+        // so any stray request in flight 401s and the axios interceptor
+        // also tries to redirect. Two navigations racing (SPA navigate
+        // vs window.location.href) was leaving the page blank until a
+        // manual refresh. One hard redirect avoids the race.
+        window.location.href = "/login";
       }
     }, 3000);
   };
@@ -56,6 +63,10 @@ function AdminDeleteAccount() {
           data: { password }, 
         }
       );
+
+      // Clear auth immediately on success, same tick as the response.
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
 
       showMessage(res.data || "Account deleted successfully", "success");
     } catch (err) {
