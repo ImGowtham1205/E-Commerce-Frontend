@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import api from "../api/axiosConfig";
 import "../styles/AdminWelcome.css";
 import "../styles/AdminChangePassword.css";
@@ -10,6 +11,10 @@ function AdminChangePassword() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [fieldErrors, setFieldErrors] = useState({});
   const [error, setError] = useState("");
@@ -140,11 +145,22 @@ function AdminChangePassword() {
           {/* Current Password */}
           <div className="form-group">
             <label>Current Password</label>
-            <input
-              type="password"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-            />
+            <div className="password-field">
+              <input
+                type={showCurrentPassword ? "text" : "password"}
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                className="toggle-eye-btn"
+                onClick={() => setShowCurrentPassword((prev) => !prev)}
+                tabIndex={-1}
+                aria-label={showCurrentPassword ? "Hide password" : "Show password"}
+              >
+                {showCurrentPassword ? <FiEyeOff /> : <FiEye />}
+              </button>
+            </div>
             {fieldErrors.currentPassword && (
               <small className="field-error">
                 {fieldErrors.currentPassword}
@@ -155,11 +171,22 @@ function AdminChangePassword() {
           {/* New Password */}
           <div className="form-group">
             <label>New Password</label>
-            <input
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-            />
+            <div className="password-field">
+              <input
+                type={showNewPassword ? "text" : "password"}
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                className="toggle-eye-btn"
+                onClick={() => setShowNewPassword((prev) => !prev)}
+                tabIndex={-1}
+                aria-label={showNewPassword ? "Hide password" : "Show password"}
+              >
+                {showNewPassword ? <FiEyeOff /> : <FiEye />}
+              </button>
+            </div>
 
             <ul className="password-rules">
               <li className={passwordRules.length ? "valid" : ""}>
@@ -189,11 +216,22 @@ function AdminChangePassword() {
           {/* Confirm Password */}
           <div className="form-group">
             <label>Confirm New Password</label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
+            <div className="password-field">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                className="toggle-eye-btn"
+                onClick={() => setShowConfirmPassword((prev) => !prev)}
+                tabIndex={-1}
+                aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+              >
+                {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
+              </button>
+            </div>
             {fieldErrors.confirmPassword && (
               <small className="field-error">
                 {fieldErrors.confirmPassword}

@@ -6,6 +6,7 @@ import "../styles/AdminDeleteAccount.css";
 function AdminDeleteAccount() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [message, setMessage] = useState("");
@@ -35,12 +36,7 @@ function AdminDeleteAccount() {
       setMessage("");
 
       if (type === "success") {
-        // Hard redirect instead of calling handleLogout()/navigate().
-        // After a successful delete, token is already cleared below,
-        // so any stray request in flight 401s and the axios interceptor
-        // also tries to redirect. Two navigations racing (SPA navigate
-        // vs window.location.href) was leaving the page blank until a
-        // manual refresh. One hard redirect avoids the race.
+        // Hard redirect after successful account deletion.
         window.location.href = "/login";
       }
     }, 3000);
@@ -58,17 +54,21 @@ function AdminDeleteAccount() {
     try {
       setLoading(true);
 
-      const res = await api.delete("/authservice/auth/api/admin/accountdeletion",
+      const res = await api.delete(
+        "/authservice/auth/api/admin/accountdeletion",
         {
-          data: { password }, 
+          data: { password },
         }
       );
 
-      // Clear auth immediately on success, same tick as the response.
+      // Clear authentication immediately after successful deletion.
       localStorage.removeItem("token");
       localStorage.removeItem("role");
 
-      showMessage(res.data || "Account deleted successfully", "success");
+      showMessage(
+        res.data || "Account deleted successfully",
+        "success"
+      );
     } catch (err) {
       showMessage(
         err.response?.data || "Failed to delete account",
@@ -81,40 +81,72 @@ function AdminDeleteAccount() {
 
   return (
     <div className="admin-container">
+
       {/* ===== NAVBAR ===== */}
       <header className="admin-navbar">
-        <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+        <button
+          className="hamburger"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
           ☰
         </button>
+
         <h1 className="logo">AzCart Admin</h1>
       </header>
 
       {/* ===== SIDEBAR ===== */}
       <aside className={`admin-sidebar ${menuOpen ? "open" : ""}`}>
         <ul>
-          <li onClick={() => navigate("/admin")}>🏠 Home</li>
-          <li onClick={() => navigate("/admin/profile")}>👤 Personal Info</li>
-          <li onClick={() => navigate("/admin/add-product")}>➕ Add Product</li>
-          <li onClick={() => navigate("/admin/products")}>📦 Manage Products </li>
-          <li onClick={() => navigate("/admin/orders")}>🧾 Manage Orders</li>
-          <li onClick={() => navigate("/admin/change-password")}>🔑 Change Password</li>
-          <li className="danger">🗑 Delete Account</li>
+          <li onClick={() => navigate("/admin")}>
+            🏠 Home
+          </li>
+
+          <li onClick={() => navigate("/admin/profile")}>
+            👤 Personal Info
+          </li>
+
+          <li onClick={() => navigate("/admin/add-product")}>
+            ➕ Add Product
+          </li>
+
+          <li onClick={() => navigate("/admin/products")}>
+            📦 Manage Products
+          </li>
+
+          <li onClick={() => navigate("/admin/orders")}>
+            🧾 Manage Orders
+          </li>
+
+          <li onClick={() => navigate("/admin/change-password")}>
+            🔑 Change Password
+          </li>
+
+          <li className="danger">
+            🗑 Delete Account
+          </li>
+
           <li className="logout" onClick={handleLogout}>
             🚪 Logout
           </li>
         </ul>
       </aside>
 
+      {/* ===== OVERLAY ===== */}
       {menuOpen && (
-        <div className="overlay" onClick={() => setMenuOpen(false)} />
+        <div
+          className="overlay"
+          onClick={() => setMenuOpen(false)}
+        />
       )}
 
       {/* ===== MAIN CONTENT ===== */}
       <main className="admin-content">
+
         <h2>Delete Admin Account ⚠</h2>
+
         <p className="warning-text">
-          This action is <strong>permanent</strong>. All admin data will be
-          deleted.
+          This action is <strong>permanent</strong>. All admin data
+          will be deleted.
         </p>
 
         {/* ===== SERVER MESSAGE ===== */}
@@ -125,20 +157,60 @@ function AdminDeleteAccount() {
         )}
 
         {/* ===== DELETE FORM ===== */}
-        <form className="delete-card" onSubmit={handleDelete}>
-          <label>Confirm Password</label>
-          <input
-            type="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+        <form
+          className="delete-card"
+          onSubmit={handleDelete}
+        >
+          <label htmlFor="admin-password">
+            Confirm Password
+          </label>
 
-          <button type="submit" disabled={loading}>
-            {loading ? "Deleting..." : "Delete My Account"}
+          {/* ===== PASSWORD INPUT ===== */}
+          <div className="password-wrapper">
+
+            <input
+              id="admin-password"
+              type={showPassword ? "text" : "password"}
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+
+            <button
+              type="button"
+              className="password-toggle"
+              onClick={() =>
+                setShowPassword(!showPassword)
+              }
+              aria-label={
+                showPassword
+                  ? "Hide password"
+                  : "Show password"
+              }
+              title={
+                showPassword
+                  ? "Hide password"
+                  : "Show password"
+              }
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </button>
+
+          </div>
+
+          {/* ===== DELETE BUTTON ===== */}
+          <button
+            type="submit"
+            disabled={loading}
+          >
+            {loading
+              ? "Deleting..."
+              : "Delete My Account"}
           </button>
+
         </form>
+
       </main>
     </div>
   );

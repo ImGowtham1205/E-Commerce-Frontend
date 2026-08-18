@@ -33,6 +33,14 @@ function OAuthSuccess() {
 
       try {
 
+        // Admins are never auto-created via OAuth (see ProcessOAuth2UsersService),
+        // so an admin token always belongs to a pre-existing, fully set-up admin.
+        // No profile-completion concept applies to them — send straight to the admin dashboard.
+        if (role === "ROLE_ADMIN") {
+          navigate("/admin", { replace: true });
+          return;
+        }
+
         const response = await api.get("/authservice/auth/api/user/userinfo");
 
         const user = response.data;

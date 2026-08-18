@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import axios from "axios";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import "../styles/ResetPassword.css";
 import logo from "../assets/azcart-logo.jpeg";
 
@@ -11,6 +12,8 @@ function ResetPassword() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordValid, setPasswordValid] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -114,36 +117,58 @@ function ResetPassword() {
 
         <div className="input-group">
           <label>New Password</label>
-          <input
-            type="password"
-            value={password}
-            placeholder="Enter new password"
-            onChange={(e) => setPassword(e.target.value)}
-            className={
-              password
-                ? passwordValid
-                  ? "valid-input"
-                  : "invalid-input"
-                : ""
-            }
-          />
+          <div className="password-field">
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              placeholder="Enter new password"
+              onChange={(e) => setPassword(e.target.value)}
+              className={
+                password
+                  ? passwordValid
+                    ? "valid-input"
+                    : "invalid-input"
+                  : ""
+              }
+            />
+            <button
+              type="button"
+              className="toggle-eye-btn"
+              onClick={() => setShowPassword((prev) => !prev)}
+              tabIndex={-1}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? <FiEyeOff /> : <FiEye />}
+            </button>
+          </div>
         </div>
 
         <div className="input-group">
           <label>Confirm Password</label>
-          <input
-            type="password"
-            value={confirmPassword}
-            placeholder="Re-enter new password"
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className={
-              confirmPassword
-                ? password === confirmPassword
-                  ? "valid-input"
-                  : "invalid-input"
-                : ""
-            }
-          />
+          <div className="password-field">
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              value={confirmPassword}
+              placeholder="Re-enter new password"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className={
+                confirmPassword
+                  ? password === confirmPassword
+                    ? "valid-input"
+                    : "invalid-input"
+                  : ""
+              }
+            />
+            <button
+              type="button"
+              className="toggle-eye-btn"
+              onClick={() => setShowConfirmPassword((prev) => !prev)}
+              tabIndex={-1}
+              aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+            >
+              {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
+            </button>
+          </div>
         </div>
 
         <button
